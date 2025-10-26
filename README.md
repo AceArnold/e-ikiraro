@@ -3,15 +3,14 @@
 # create virtual environment
 
 ## Install virtualenv
-- pip install virtualenv
-or 
-- pip3 install virtualenv
+``` pip install virtualenv
+``` pip3 install virtualenv
 
 ## Create the virtual environment
-- python3 -m venv venv
+``` python3 -m venv venv
 
 ## Run the the virtual environment
-- source venv/bin/activate
+``` source venv/bin/activate
 
 
 
