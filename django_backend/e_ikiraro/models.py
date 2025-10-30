@@ -10,6 +10,7 @@ class Service(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, unique=True, help_text="Name of the service")
     description = models.TextField(help_text="Description of the service")
+    base_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, help_text="Base fee for the service")
 
     def __str__(self):
         return self.name
@@ -36,18 +37,37 @@ class Application(models.Model):
 
 
 class PassportApplication(models.Model):
+    PASSPORT_TYPES = [
+        ('Ordinary Passport', 'Ordinary Passport'),
+        ('Official Passport', 'Official Passport'),
+        ('Diplomatic Passport', 'Diplomatic Passport'),
+        ('Emergency Travel Document', 'Approved'),
+    ]
+
+    application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='passport_details')
+    passport_type = models.CharField(max_length=500, choices=PASSPORT_TYPES)
+    national_id = models.CharField(max_length=20, blank = True)
+
+    def __str__(self):
+        return f"Passport Application for {self.application.user.username}"
+
+
+class NationalIDApplication(models.Model):
+    application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='national_id_details')
+    father_name = models.CharField(max_length=100)
+    mother_name = models.CharField(max_length=100)
+    address = models.TextField()
+
+    def __str__(self):
+        return f'National ID Application for {self.application.user.username}'
+    
+
+class DriversLicenseApplication(models.Model):
     pass
-    # PASSPORT_TYPES = [
-    #     ('Ordinary Passport', 'Ordinary Passport'),
-    #     ('Official Passport', 'Official Passport'),
-    #     ('Diplomatic Passport', 'Diplomatic Passport'),
-    #     ('Emergency Travel Document', 'Approved'),
-    # ]
-
-    # application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='passport_details')
-    # passport_type = models.CharField(max_length=20, choices=PASSPORT_TYPES)
+    # LICESCENSE_TYPES = [
 
 
+    # application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='drivers_license_details')
 
 
 
@@ -59,11 +79,9 @@ class Document(models.Model):
 
 
 
-class DriversLicenseApplication(models.Model):
-    pass
 
-class NationalIDApplication(models.Model):
-    pass
+
+
 
 
 
