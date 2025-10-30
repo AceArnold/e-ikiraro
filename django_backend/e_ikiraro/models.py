@@ -63,11 +63,15 @@ class NationalIDApplication(models.Model):
     
 
 class DriversLicenseApplication(models.Model):
-    pass
-    # LICESCENSE_TYPES = [
+    LICENSE_TYPES = [
+        ('Motorcycle', 'Motorcycle'),
+        ('Private Car', 'Private Car'),
+        ('Commercial Vehicle', 'Commercial Vehicle'),
+    ]
 
-
-    # application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='drivers_license_details')
+    application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='drivers_license_details')
+    license_type = models.CharField(max_length=50, choices=LICENSE_TYPES)
+    medical_certificate = 
 
 
 
