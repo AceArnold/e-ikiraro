@@ -20,3 +20,9 @@ Install django
 pip install django
 or 
 pip3 install django
+
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+python manage.py createsuperuser
