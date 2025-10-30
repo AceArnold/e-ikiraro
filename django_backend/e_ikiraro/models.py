@@ -46,7 +46,9 @@ class PassportApplication(models.Model):
 
     application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='passport_details')
     passport_type = models.CharField(max_length=500, choices=PASSPORT_TYPES)
-    national_id = models.CharField(max_length=20, blank = True)
+    passport_photo = models.FileField(upload_to='documents/passport_photos/')
+    birth_certificate = models.FileField(upload_to='documents/birth_certificates/')
+    national_id = models.FileField(upload_to='documents/national_ids/')
 
     def __str__(self):
         return f"Passport Application for {self.application.user.username}"
@@ -54,6 +56,7 @@ class PassportApplication(models.Model):
 
 class NationalIDApplication(models.Model):
     application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='national_id_details')
+    birth_certificate = models.FileField(upload_to='documents/birth_certificates/')
     father_name = models.CharField(max_length=100)
     mother_name = models.CharField(max_length=100)
     address = models.TextField()
@@ -65,20 +68,60 @@ class NationalIDApplication(models.Model):
 class DriversLicenseApplication(models.Model):
     LICENSE_TYPES = [
         ('Motorcycle', 'Motorcycle'),
-        ('Private Car', 'Private Car'),
+        ('Personal Car', 'Personal Car'),
         ('Commercial Vehicle', 'Commercial Vehicle'),
     ]
 
     application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='drivers_license_details')
     license_type = models.CharField(max_length=50, choices=LICENSE_TYPES)
+    photo = models.FileField(upload_to='documents/license_photos/')
+    medical_certificate = models.FileField(upload_to='documents/medical_certificates/')
+    eye_test_certificate = models.FileField(upload_to='documents/eye_test_certificates/')
+    national_id = models.FileField(upload_to='documents/national_ids/')
 
+    def __str__(self):
+        return f"Driver's License Application for {self.application.user.username}"
 
 
 class Payment(models.Model):
-    pass
+    PAYMENT_METHODS = [
+        ('Mobile Money', 'Mobile Money'),
+        ('Bank Transfer', 'Bank Transfer'),
+        ('Credit Card', 'Credit Card'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='payments')
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name='payments')
+    service_type = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = models.CharField(max_length=50, choices=PAYMENT_METHODS)
+    transaction_id = models.CharField(max_length=100)
+    provider_reference = models.CharField(max_length=100)
+    paid_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Payment of {self.amount} by {self.user.username} for {self.service_type}"
+
 
 class Document(models.Model):
-    pass
+    DOCUMENT_TYPES = [
+        ('Passport', 'Passport'),
+        ('National ID', 'National ID'),
+        ('Driver License', 'Driver License'),
+        ('Birth Certificate', 'Birth Certificate'),
+        ('Medical Certificate', 'Medical Certificate'),
+        ('Other', 'Other'),
+    ]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='documents')
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name='documents')
+    document_type = models.CharField(max_length=100)
+    file = models.FileField(upload_to='documents/')
+    uploaded_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.document_type} for {self.application.user.username}"
 
 
 
