@@ -71,7 +71,6 @@ class DriversLicenseApplication(models.Model):
 
     application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='drivers_license_details')
     license_type = models.CharField(max_length=50, choices=LICENSE_TYPES)
-    medical_certificate = 
 
 
 
