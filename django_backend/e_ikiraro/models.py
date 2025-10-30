@@ -26,7 +26,7 @@ class Application(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='applications')
-    service = models.ForeignKey(Service, on_delete=models.PROTECT, related_name='applications')
+    service = models.ForeignKey(Service, on_delete=models.PROTECT, related_name='applications', null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     submitted_at = models.DateTimeField(default=timezone.now)
     approved_at = models.DateTimeField(null=True, blank=True)
