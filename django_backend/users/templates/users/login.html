@@ -1,22 +1,22 @@
 {% extends "e_ikiraro/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Register Page</h1>
-    <p>Please register to continue.</p>
+    <h1>Login Page</h1>
+    <p>Please Login to continue.</p>
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Sign Up</legend>
+                <legend class="border-bottom mb-4">Log In</legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button type="submit " class="btn btn-primary">Sign Up</button>
+                <button type="submit " class="btn btn-primary">Login</button>
             </div>
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Log In</a>
+                DOn't have an account? <a class="ml-2" href="{% url 'register' %}">Sign up</a>
             </small>
         </div>
 
