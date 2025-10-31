@@ -9,8 +9,8 @@ def home(request):
 def about(request):
     return render(request, 'e_ikiraro/about.html', {'title': 'About'})
 
-def login(request):
-    return render(request, 'e_ikiraro/login.html', {'title': 'Login'})
+# def login(request):
+#     return render(request, 'e_ikiraro/login.html', {'title': 'Login'})
 
-def register(request):
-    return render(request, 'e_ikiraro/register.html', {'title': 'Register'})
+# def register(request):
+#     return render(request, 'e_ikiraro/register.html', {'title': 'Register'})
