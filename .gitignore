@@ -1,9 +1,11 @@
+# Virtual Environment
 venv/
-django_backend/e_ikiraro/__pycache__
-# django_backend/django_backend/__pycache__
-# *.pyc
-# *.pyo
-# *.pyd
-django_backend/django_backend/__pycache__/settings.cpython-310.pyc
+
+# Python cache
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database
 *.sqlite3
