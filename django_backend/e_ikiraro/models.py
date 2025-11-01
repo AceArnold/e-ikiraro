@@ -41,7 +41,7 @@ class PassportApplication(models.Model):
         ('Ordinary Passport', 'Ordinary Passport'),
         ('Official Passport', 'Official Passport'),
         ('Diplomatic Passport', 'Diplomatic Passport'),
-        ('Emergency Travel Document', 'Approved'),
+        ('Emergency Travel Document', 'Emergency Travel Document'),
     ]
 
     application = models.OneToOneField(Application, on_delete=models.CASCADE, primary_key=True, related_name='passport_details')
@@ -90,6 +90,12 @@ class Payment(models.Model):
         ('Credit Card', 'Credit Card'),
     ]
 
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Completed', 'Completed'),
+        ('Failed', 'Failed'),
+    ]
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='payments')
     application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name='payments')
@@ -98,6 +104,7 @@ class Payment(models.Model):
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHODS)
     transaction_id = models.CharField(max_length=100)
     provider_reference = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     paid_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
