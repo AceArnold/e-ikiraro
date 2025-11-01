@@ -21,8 +21,23 @@ from users import views as user_views
 from ninja import NinjaAPI
 from django.conf import settings
 from django.conf.urls.static import static
+from .api import (
+    service_router, application_router, passport_router,
+    id_router, license_router, payment_router, document_router, user_router
+)
+
 
 api = NinjaAPI()
+
+api.add_router("/services", service_router)
+api.add_router("/applications", application_router)
+api.add_router("/passport", passport_router)
+api.add_router("/national-id", id_router)
+api.add_router("/license", license_router)
+api.add_router("/payments", payment_router)
+api.add_router("/documents", document_router)
+api.add_router("/users", user_router)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,6 +46,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', user_views.profile, name='profile'),
+
 
 ]
 
