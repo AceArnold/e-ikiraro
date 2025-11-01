@@ -3,7 +3,7 @@ const services = [
         id: 1,
         title: "Apply for National ID",
         icon: "🪪",
-        description: "BRUNEI DARUSSALAM National Identity Card",
+        description: "Buundi National Identity Card",
         page: "national-id.html"
     },
     {
@@ -72,7 +72,7 @@ function setupEventListeners() {
 
 function handleAuthClick() {
     console.log('Auth button clicked');
-    alert('Login/Register functionality would open here.\n\nThis would typically open a modal or redirect to an authentication page.');
+   alert('Are you sure you want to logout?\n\n(This feature is currently under development)');
 
 }
 
