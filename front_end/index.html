@@ -17,6 +17,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#portfolio">Services</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="pages/login.html">login</a></li>
             </ul>
             <div class="mobile-menu-toggle" id="mobileMenuToggle">
                 <div class="hamburger"></div>
@@ -31,7 +32,8 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="pages/login.html">Login</a></li>
+            <!-- <li><a href="pages/login.html">Login</a></li> -->
         </ul>
     </div>
 
@@ -46,30 +48,31 @@
         </div>
         <div class="hero-content">
             <div class="hero-subtitle">Creative Designer</div>
-            <h1>Transforming Ideas Into Beautiful Experiences</h1>
-            <p class="subtitle">I craft digital experiences that captivate, engage, and inspire through thoughtful design and innovative solutions</p>
-            <a href="#portfolio" class="cta-button">Explore My Work</a>
+            <h1>Bridging Citizens to Services</h1>
+            <p class="subtitle">E-Ikiraro is a simple online platform that helps Burundians access key government services quickly and conveniently</p>
+            <a href="#portfolio" class="cta-button">Our Services</a>
         </div>
         <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView()"></div>
     </section>
 
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title fade-in">About Me</h2>
+            <h2 class="section-title fade-in">About E-ikiraro</h2>
             <div class="about-content">
                 <div class="about-image slide-in-left"></div>
                 <div class="about-text slide-in-right">
-                    <h3>Passionate about creating meaningful digital experiences</h3>
-                    <p>With over 5 years of experience in digital design, I specialize in creating user-centered solutions that bridge the gap between functionality and aesthetics. My approach combines strategic thinking with creative execution to deliver impactful results.</p>
-                    <p>I believe that great design is not just about how it looks, but how it works and how it makes people feel. Every project is an opportunity to solve problems and create connections that matter.</p>
-                    <p>When I'm not designing, you'll find me exploring new technologies, sketching ideas, or seeking inspiration in nature and architecture.</p>
+                    <h3>E-Ikiraro is a simple online platform that helps Burundians access key government services quickly and conveniently.</h3>
+
+                    <p>E-Ikiraro is a digital platform designed to make access to public services in Burundi fast, simple, and transparent. 
+                      It allows citizens to apply for key documents such as national IDs, passports, and driver’s licenses online — reducing long queues, travel costs, and manual paperwork. 
+                      The system is built to match Burundi’s digital needs, ensuring ease of use, mobile access, and secure data handling. 
+                      E-Ikiraro aims to bridge the gap between citizens and government services by providing a modern, reliable, and user-friendly solution.
+                    </p>
+
                     <div class="skills">
-                        <span class="skill-tag">UI/UX Design</span>
-                        <span class="skill-tag">Web Development</span>
-                        <span class="skill-tag">Brand Identity</span>
-                        <span class="skill-tag">Motion Graphics</span>
-                        <span class="skill-tag">Prototyping</span>
-                        <span class="skill-tag">Design Systems</span>
+                        <span class="skill-tag">Driver licenses application</span>
+                        <span class="skill-tag">National-ID application</span>
+                        <span class="skill-tag">passports application</span>
                     </div>
                 </div>
             </div>
@@ -78,16 +81,20 @@
 
     <section id="portfolio" class="portfolio">
         <div class="container">
-            <h2 class="section-title fade-in">Featured Work</h2>
+            <h2 class="section-title fade-in">Our Services</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
                     <div class="portfolio-image"></div>
                     <div class="portfolio-content">
-                        <h4>E-commerce Platform</h4>
-                        <p>A modern, responsive e-commerce solution with focus on user experience and conversion optimization. Built with scalability and performance in mind.</p>
-                        <div class="portfolio-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
+                        <a href="pages/Service_page_1.html">
+                          <div>
+                            <h4>Driver’s License Application</h4>
+                          </div>
+                        </a>
+                        <p>Apply online for your driver’s license with a simple and faster process. Submit your details, track your application, and receive updates without long queues.</p>
+                          <div class="portfolio-tech">
+                            <span class="tech-tag">Provisional driver's Lisence</span>
+                            <span class="tech-tag">Practical driver's Lisence</span>
                             <span class="tech-tag">MongoDB</span>
                             <span class="tech-tag">Stripe</span>
                         </div>
@@ -119,45 +126,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image"></div>
-                    <div class="portfolio-content">
-                        <h4>Dashboard Interface</h4>
-                        <p>Clean and functional dashboard design for data analytics platform with complex information architecture and real-time data visualization.</p>
-                        <div class="portfolio-tech">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">D3.js</span>
-                            <span class="tech-tag">SCSS</span>
-                            <span class="tech-tag">Chart.js</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image"></div>
-                    <div class="portfolio-content">
-                        <h4>Marketing Website</h4>
-                        <p>Modern marketing website with interactive animations and optimized conversion funnels. Built for maximum performance and SEO.</p>
-                        <div class="portfolio-tech">
-                            <span class="tech-tag">Next.js</span>
-                            <span class="tech-tag">Framer Motion</span>
-                            <span class="tech-tag">Tailwind CSS</span>
-                            <span class="tech-tag">Vercel</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image"></div>
-                    <div class="portfolio-content">
-                        <h4>Creative Portfolio</h4>
-                        <p>Artistic portfolio website featuring immersive galleries, smooth transitions, and creative storytelling for a digital artist.</p>
-                        <div class="portfolio-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Three.js</span>
-                            <span class="tech-tag">GSAP</span>
-                            <span class="tech-tag">WebGL</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -175,7 +143,7 @@
         <div class="container">
             <div class="contact-content">
                 <h2 class="section-title fade-in">Let's Work Together</h2>
-                <p class="fade-in">Ready to bring your vision to life? Let's discuss how we can create something amazing together. I'm always excited to take on new challenges and collaborate on innovative projects.</p>
+                <p class="fade-in">Have questions or need support? Reach out to our team for assistance with E-Ikiraro services, feedback, or general inquiries. We’re here to help.</p>
                 <form class="contact-form fade-in">
                     <div class="form-row">
                         <div class="form-group">
@@ -192,7 +160,7 @@
                         <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
                     </div>
                     <div class="form-group">
-                        <label for="message">Message</label>
+                        <label for="message">How can we help you</label>
                         <textarea id="message" name="message" rows="6" placeholder="Tell me about your project..." required></textarea>
                     </div>
                     <button type="submit" class="submit-btn">Send Message</button>
@@ -212,7 +180,6 @@
                     <a href="#privacy">Privacy Policy</a>
                     <a href="#terms">Terms of Use</a>
                     <a href="#sitemap">Sitemap</a>
-                    <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">Provided by TemplateMo</a>
                 </div>
             </div>
         </div>
