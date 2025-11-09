@@ -1,29 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - E-ikiraro</title>
-  <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../styles/login.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Ikiraro | Login</title>
+  <link rel="stylesheet" href="../styles/login.css" />
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login to E-ikiraro</h2>
-    <form id="loginForm">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Enter your email" required>
-      <small>Use a public email like @gmail.com, @yahoo.com, etc.</small>
-
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Enter your password" required>
-      
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="register-id.html">Register here</a></p>
+  <div class="contact-floating-shapes">
+    <div class="contact-shape contact-shape-1"></div>
+    <div class="contact-shape contact-shape-2"></div>
+    <div class="contact-shape contact-shape-3"></div>
+    <div class="contact-shape contact-shape-4"></div>
+    <div class="contact-shape contact-shape-5"></div>
+    <div class="contact-shape contact-shape-6"></div>
   </div>
 
-  <script src="../script.js"></script>
-  <script src="../scripts/login.js"></script>
+  <section class="login-section">
+    <div class="login-container fade-in">
+      <h2 class="section-title">Welcome Back</h2>
+      <p class="login-subtitle">Log in to continue to E-Ikiraro</p>
+      <form class="login-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your.email@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        </div>
+
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" /> Remember me
+          </label>
+          <a href="#" class="forgot-password">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="submit-btn">Login</button>
+        <p class="register-link">Don’t have an account? <a href="#">Register here</a></p>
+      </form>
+    </div>
+  </section>
+    <script src="../scripts/login.js"></script>
 </body>
 </html>

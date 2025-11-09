@@ -1,35 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - E-ikiraro</title>
-  <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../styles/register-id.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Ikiraro | Register</title>
+  <link rel="stylesheet" href="../styles/register-id.css" />
 </head>
+
 <body>
-  <div class="register-container">
-    <h2>Register for E-ikiraro</h2>
-    <form id="registerForm">
-      <label for="fullname">Full Name</label>
-      <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
-
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Enter your email" required>
-      <small>Use a public email like @gmail.com, @yahoo.com, etc.</small>
-
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Enter a password" required>
-
-      <label for="confirmPassword">Confirm Password</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
-      
-      <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="login.html">Login here</a></p>
+  <div class="contact-floating-shapes">
+    <div class="contact-shape contact-shape-1"></div>
+    <div class="contact-shape contact-shape-2"></div>
+    <div class="contact-shape contact-shape-3"></div>
+    <div class="contact-shape contact-shape-4"></div>
+    <div class="contact-shape contact-shape-5"></div>
+    <div class="contact-shape contact-shape-6"></div>
   </div>
 
-  <script src="../script.js"></script>
-  <script src="../scripts/register-id.js"></script>
+  <section class="register-section">
+    <div class="register-container fade-in">
+      <h2 class="section-title">Create Account</h2>
+      <p class="register-subtitle">Register to get started with E-Ikiraro</p>
+
+      <form class="register-form">
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your.email@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Create password" required />
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" required />
+        </div>
+
+        <button type="submit" class="submit-btn">Register</button>
+
+        <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+      </form>
+    </div>
+  </section>
 </body>
 </html>
