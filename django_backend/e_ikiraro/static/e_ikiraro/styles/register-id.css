@@ -12,12 +12,12 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   width: 600px;
-  /* text-align: center; */
 }
 
 .register-container h2 {
   margin-bottom: 1.5rem;
   color: #e54646;
+  text-align: center;
 }
 
 .register-container form {
