@@ -17,7 +17,7 @@ def list_users(request):
 
 @service_router.get("/", summary="List all services")
 def list_services(request):
-    return [{"id": str(s.id), "name": s.name, "fee": float(s.base_fee)} for s in Service.objects.all()]
+    return [{"id": str(s.id), "name": s.name, "description": s.description, "fee": float(s.base_fee)} for s in Service.objects.all()]
 
 @application_router.get("/", summary="List all applications")
 def list_applications(request):
