@@ -1,0 +1,200 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center py-4">
+                    <h2 class="mb-0">Payment</h2>
+                    <p class="mb-0 mt-2">Complete your passport application payment</p>
+                </div>
+                <div class="card-body p-5">
+                    <!-- Payment Summary -->
+                    <div class="alert alert-info mb-4">
+                        <h5 class="alert-heading">Payment Summary</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6"><strong>Service:</strong></div>
+                            <div class="col-6 text-right">{{ service.name }}</div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6"><strong>Application ID:</strong></div>
+                            <div class="col-6 text-right"><code>{{ application.id }}</code></div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6"><strong>Amount Due:</strong></div>
+                            <div class="col-6 text-right">
+                                <h4 class="mb-0 text-primary">{{ amount }} BIF</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Form -->
+                    <form method="POST" id="paymentForm">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-4">
+                            <label class="font-weight-bold mb-3">Select Payment Method <span class="text-danger">*</span></label>
+                            
+                            <div class="payment-methods">
+                                <div class="custom-control custom-radio mb-3">
+                                    <input type="radio" id="mobileMoney" name="payment_method" value="Mobile Money" class="custom-control-input" required>
+                                    <label class="custom-control-label payment-option" for="mobileMoney">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-mobile-alt fa-2x text-primary mr-3"></i>
+                                            <div>
+                                                <strong>Mobile Money</strong>
+                                                <p class="mb-0 small text-muted">Pay using Ecocash, Lumicash, or other mobile money services</p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="custom-control custom-radio mb-3">
+                                    <input type="radio" id="bankTransfer" name="payment_method" value="Bank Transfer" class="custom-control-input">
+                                    <label class="custom-control-label payment-option" for="bankTransfer">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-university fa-2x text-primary mr-3"></i>
+                                            <div>
+                                                <strong>Bank Transfer</strong>
+                                                <p class="mb-0 small text-muted">Transfer directly from your bank account</p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="custom-control custom-radio mb-3">
+                                    <input type="radio" id="creditCard" name="payment_method" value="Credit Card" class="custom-control-input">
+                                    <label class="custom-control-label payment-option" for="creditCard">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-credit-card fa-2x text-primary mr-3"></i>
+                                            <div>
+                                                <strong>Credit/Debit Card</strong>
+                                                <p class="mb-0 small text-muted">Pay using Visa, Mastercard, or other cards</p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mobile Money Details (shown when mobile money is selected) -->
+                        <div id="mobileMoneyDetails" class="payment-details" style="display: none;">
+                            <div class="form-group">
+                                <label for="phone_number" class="font-weight-bold">Mobile Money Phone Number</label>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="+257 XX XXX XXX">
+                                <small class="form-text text-muted">Enter the phone number registered with your mobile money account</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Bank Transfer Details (shown when bank transfer is selected) -->
+                        <div id="bankTransferDetails" class="payment-details" style="display: none;">
+                            <div class="alert alert-warning">
+                                <h6 class="alert-heading">Bank Transfer Instructions:</h6>
+                                <p class="mb-2"><strong>Bank:</strong> Banque de la République du Burundi</p>
+                                <p class="mb-2"><strong>Account Name:</strong> E-Ikiraro Services</p>
+                                <p class="mb-2"><strong>Account Number:</strong> 1234567890</p>
+                                <p class="mb-0"><strong>Reference:</strong> {{ application.id }}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Credit Card Details (shown when credit card is selected) -->
+                        <div id="creditCardDetails" class="payment-details" style="display: none;">
+                            <div class="form-group">
+                                <label for="card_number" class="font-weight-bold">Card Number</label>
+                                <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="expiry_date" class="font-weight-bold">Expiry Date</label>
+                                        <input type="text" class="form-control" id="expiry_date" name="expiry_date" placeholder="MM/YY" maxlength="5">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cvv" class="font-weight-bold">CVV</label>
+                                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" maxlength="3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-success btn-lg px-5">
+                                <i class="fas fa-check-circle"></i> Complete Payment
+                            </button>
+                            <a href="{% url 'passport-apply' %}" class="btn btn-secondary btn-lg px-5 ml-3">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .payment-option {
+        border: 2px solid #e0e0e0;
+        padding: 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .payment-option:hover {
+        border-color: #007bff;
+        background-color: #f8f9fa;
+    }
+    .custom-control-input:checked ~ .custom-control-label.payment-option {
+        border-color: #007bff;
+        background-color: #e7f3ff;
+    }
+    .payment-details {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+</style>
+
+<script>
+    // Show/hide payment details based on selected method
+    document.querySelectorAll('input[name="payment_method"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            // Hide all payment details
+            document.querySelectorAll('.payment-details').forEach(function(el) {
+                el.style.display = 'none';
+            });
+            
+            // Show selected payment details
+            if (this.value === 'Mobile Money') {
+                document.getElementById('mobileMoneyDetails').style.display = 'block';
+            } else if (this.value === 'Bank Transfer') {
+                document.getElementById('bankTransferDetails').style.display = 'block';
+            } else if (this.value === 'Credit Card') {
+                document.getElementById('creditCardDetails').style.display = 'block';
+            }
+        });
+    });
+    
+    // Card number formatting
+    document.getElementById('card_number')?.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s/g, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        e.target.value = formattedValue;
+    });
+    
+    // Expiry date formatting
+    document.getElementById('expiry_date')?.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4);
+        }
+        e.target.value = value;
+    });
+</script>
+{% endblock content %}
