@@ -7,6 +7,12 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Submit, Div
 
 
+class OTPVerificationForm(forms.Form):
+    code = forms.CharField(max_length=6, required=True,
+                           widget=forms.TextInput(attrs={'placeholder':'Enter verification code','autocomplete':'off'}))
+
+
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
 

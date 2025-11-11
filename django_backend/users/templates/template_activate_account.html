@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Activate your account</title>
+</head>
+<body>
+  <p>Hello {{ user }},</p>
+
+  <p>Thanks for signing up. Please click the link below to activate your account:</p>
+
+  <p>
+    <a href="{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token % }">
+      Activate your account
+    </a>
+  </p>
+
+  <p>If the link doesn't work, copy and paste this URL into your browser:</p>
+  <p>{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}</p>
+
+  <p>If you didn't sign up, you can ignore this email.</p>
+</body>
+</html>

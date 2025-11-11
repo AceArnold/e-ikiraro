@@ -20,6 +20,7 @@ from django.urls import path, include
 from users import views as user_views
 from ninja import NinjaAPI
 from django.conf import settings
+from users import views as user_views
 from django.conf.urls.static import static
 from e_ikiraro.api import (
     service_router, application_router, passport_router,
@@ -46,6 +47,10 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', user_views.profile, name='profile'),
+    # path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),
+    path('verify-otp/<uidb64>/', user_views.verify_otp, name='verify-otp'),
+    path('resend-otp/<uidb64>/', user_views.resend_otp, name='resend-otp'),
+
 
 ]
 

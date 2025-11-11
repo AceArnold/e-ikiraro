@@ -1,0 +1,21 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+  <div class="register-container">
+    <h2>Enter verification code</h2>
+    <p>A verification code was sent to {{ user.email }}. It expires in {{ expires_minutes|default:"15" }} minutes.</p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="form-group">
+        {{ form.code.label_tag }}
+        {{ form.code }}
+        {{ form.code.errors }}
+      </div>
+      <button type="submit" class="btn btn-primary">Verify</button>
+    </form>
+    <p>
+      Didn't receive code? <a href="{% url 'resend-otp' uidb64=uidb64 %}">Resend</a>
+    </p>
+  </div>
+{% endblock content %}
