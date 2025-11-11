@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical Driving Exam Form</title>
+    <link rel="stylesheet" href="../styles/PDL.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Practical Driving Exam Form</h2>
+        <form id="pdlForm">
+            <label for="fullName" class="form-label">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+
+            <label for="examLocation" class="form-label">Location (Choose where you want to do the exam):</label>
+            <select id="examLocation" name="examLocation" required>
+                <option value="">Select Location</option>
+                <option value="Bujumbura">Bujumbura</option>
+                <option value="Gitega">Gitega</option>
+                <option value="Ngozi">Ngozi</option>
+                <option value="Makamba">Makamba</option>
+                <option value="Ruyigi">Ruyigi</option>
+                <option value="Cankuzo">Cankuzo</option>
+                <option value="Kayanza">Kayanza</option>
+                <option value="Bururi">Bururi</option>
+                <!-- Add more locations as necessary -->
+            </select>
+
+            <label for="examDate" class="form-label">Date of Exam:</label>
+            <input type="date" id="examDate" name="examDate" required>
+
+            <label for="yearsOfExperience" class="form-label">Years of Driving Experience:</label>
+            <input type="number" id="yearsOfExperience" name="yearsOfExperience" placeholder="Enter years of experience" required>
+
+            <label for="comments" class="form-label">Additional Information (e.g., Special requests, Vehicle info):</label>
+            <textarea id="comments" name="comments" placeholder="Provide additional details" rows="4"></textarea>
+
+            <label for="contactNo" class="form-label">Contact No:</label>
+            <input type="tel" id="contactNo" name="contactNo" placeholder="Enter your contact number" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script src="../scripts/PDL.js"></script>
+</body>
+</html>
