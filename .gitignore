@@ -9,3 +9,11 @@ __pycache__/
 
 # Database
 *.sqlite3
+
+# Local environment files (do not commit)
+django_backend/.env
+/.env
+client_secret_*.json
+
+# VSCode
+.vscode/
