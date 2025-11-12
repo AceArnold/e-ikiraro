@@ -23,7 +23,7 @@ from django.conf import settings
 from users import views as user_views
 from django.conf.urls.static import static
 from e_ikiraro.api import (
-    service_router, application_router, passport_router,
+    service_router, passport_router,
     id_router, license_router, payment_router, document_router, user_router
 )
 
@@ -31,7 +31,6 @@ from e_ikiraro.api import (
 api = NinjaAPI()
 
 api.add_router("/services", service_router)
-api.add_router("/applications", application_router)
 api.add_router("/passport", passport_router)
 api.add_router("/national-id", id_router)
 api.add_router("/license", license_router)
@@ -53,6 +52,7 @@ urlpatterns = [
     path('resend-otp/<uidb64>/', user_views.resend_otp, name='resend-otp'),
 
 
+    path('api/', api.urls),
 
 ]
 

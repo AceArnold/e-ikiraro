@@ -7,7 +7,7 @@ body {
 }
 
 header {
-  background-color: #5f0000;
+  background-color: #9c009f;
   color: white;
   padding: 1.5rem 1rem;
 }
@@ -32,11 +32,11 @@ header {
 }
 
 .card h3 {
-  color: #5f0000;
+  color: #9c009f;
 }
 
 button {
-  background-color: #5f0000;
+  background-color: #9c009f;
   color: white;
   border: none;
   border-radius: 8px;
@@ -46,5 +46,5 @@ button {
 }
 
 button:hover {
-  background-color: #800000;
+  background-color: #bd00c0;
 }
