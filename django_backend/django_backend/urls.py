@@ -22,7 +22,7 @@ from ninja import NinjaAPI
 from django.conf import settings
 from django.conf.urls.static import static
 from e_ikiraro.api import (
-    service_router, application_router, passport_router,
+    service_router, passport_router,
     id_router, license_router, payment_router, document_router, user_router
 )
 
@@ -30,7 +30,6 @@ from e_ikiraro.api import (
 api = NinjaAPI()
 
 api.add_router("/services", service_router)
-api.add_router("/applications", application_router)
 api.add_router("/passport", passport_router)
 api.add_router("/national-id", id_router)
 api.add_router("/license", license_router)
@@ -46,6 +45,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', user_views.profile, name='profile'),
+    path('api/', api.urls),
 
 ]
 
