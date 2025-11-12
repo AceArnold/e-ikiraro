@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+SITE_ID=2
+
+
 INSTALLED_APPS = [
     'e_ikiraro.apps.EIkiraroConfig',
     'users.apps.UsersConfig',
@@ -43,7 +46,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +71,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -152,4 +173,11 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 LOGIN_REDIRECT_URL = 'e-ikiraro-home'
+LOGOUT_REDIRECT_URL = 'e-ikiraro-home'
 LOGIN_URL = 'login'
+
+AUTHENTICATION_BACKENDS = [
+     'django.contrib.auth.backends.ModelBackend',
+     'allauth.account.auth_backends.AuthenticationBackend',
+ ]
+

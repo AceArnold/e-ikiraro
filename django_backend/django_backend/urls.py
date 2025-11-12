@@ -45,14 +45,17 @@ urlpatterns = [
     path('', include('e_ikiraro.urls')),
     path('register/', user_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    # allauth routes (social login, callbacks)
+    path('accounts/', include('allauth.urls')),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', user_views.profile, name='profile'),
-    # path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),
     path('verify-otp/<uidb64>/', user_views.verify_otp, name='verify-otp'),
     path('resend-otp/<uidb64>/', user_views.resend_otp, name='resend-otp'),
+
 
 
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
