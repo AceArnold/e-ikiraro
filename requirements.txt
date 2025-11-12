@@ -4,5 +4,6 @@ virtualenv >=20.0.0
 crispy-bootstrap5
 six
 pillow
+python-decouple 
 # crispy-forms >=2.4
 # crispy-forms-bootstrap4 >= 2022.1
