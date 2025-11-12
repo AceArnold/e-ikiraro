@@ -122,9 +122,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Serve the project's front-end static files during development
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-    ]
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, '..', 'front_end'),
+]
 
 
 # Default primary key field type
