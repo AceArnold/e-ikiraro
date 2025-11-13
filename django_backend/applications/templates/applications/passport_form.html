@@ -1,0 +1,317 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h2 class="mb-0">Passport Application Form</h2>
+                    <p class="mb-0 mt-2">Please fill in all required fields accurately</p>
+                </div>
+                <div class="card-body p-5">
+                    <form method="POST" enctype="multipart/form-data" id="passportForm">
+                        {% csrf_token %}
+                        
+                        <!-- Passport Type Selection -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title text-primary mb-4">
+                                <i class="fas fa-passport"></i> Passport Type
+                            </h4>
+                            <div class="form-group">
+                                <label for="{{ form.passport_type.id_for_label }}" class="font-weight-bold">
+                                    Select Passport Type <span class="text-danger">*</span>
+                                </label>
+                                {{ form.passport_type }}
+                                {% if form.passport_type.errors %}
+                                    <div class="text-danger small mt-1">{{ form.passport_type.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Personal Information -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title text-primary mb-4">
+                                <i class="fas fa-user"></i> Personal Information
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="font-weight-bold">
+                                        First Name <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.first_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="font-weight-bold">
+                                        Last Name <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.last_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.date_of_birth.id_for_label }}" class="font-weight-bold">
+                                        Date of Birth <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.date_of_birth }}
+                                    {% if form.date_of_birth.errors %}
+                                        <div class="text-danger small mt-1">{{ form.date_of_birth.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.place_of_birth.id_for_label }}" class="font-weight-bold">
+                                        Place of Birth <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.place_of_birth }}
+                                    {% if form.place_of_birth.errors %}
+                                        <div class="text-danger small mt-1">{{ form.place_of_birth.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.gender.id_for_label }}" class="font-weight-bold">
+                                        Gender <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.gender }}
+                                    {% if form.gender.errors %}
+                                        <div class="text-danger small mt-1">{{ form.gender.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.nationality.id_for_label }}" class="font-weight-bold">
+                                        Nationality <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.nationality }}
+                                    {% if form.nationality.errors %}
+                                        <div class="text-danger small mt-1">{{ form.nationality.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Information -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title text-primary mb-4">
+                                <i class="fas fa-address-book"></i> Contact Information
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.phone_number.id_for_label }}" class="font-weight-bold">
+                                        Phone Number <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.phone_number }}
+                                    {% if form.phone_number.errors %}
+                                        <div class="text-danger small mt-1">{{ form.phone_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.email.id_for_label }}" class="font-weight-bold">
+                                        Email Address <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.current_address.id_for_label }}" class="font-weight-bold">
+                                    Current Address <span class="text-danger">*</span>
+                                </label>
+                                {{ form.current_address }}
+                                {% if form.current_address.errors %}
+                                    <div class="text-danger small mt-1">{{ form.current_address.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Parent Information -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title text-primary mb-4">
+                                <i class="fas fa-users"></i> Parent Information
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.father_name.id_for_label }}" class="font-weight-bold">
+                                        Father's Full Name <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.father_name }}
+                                    {% if form.father_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.father_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.mother_name.id_for_label }}" class="font-weight-bold">
+                                        Mother's Full Name <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.mother_name }}
+                                    {% if form.mother_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.mother_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Emergency Contact -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title text-primary mb-4">
+                                <i class="fas fa-phone-square"></i> Emergency Contact
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.emergency_contact_name.id_for_label }}" class="font-weight-bold">
+                                        Contact Name <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.emergency_contact_name }}
+                                    {% if form.emergency_contact_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.emergency_contact_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.emergency_contact_phone.id_for_label }}" class="font-weight-bold">
+                                        Contact Phone <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.emergency_contact_phone }}
+                                    {% if form.emergency_contact_phone.errors %}
+                                        <div class="text-danger small mt-1">{{ form.emergency_contact_phone.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Previous Passport (Optional) -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title text-primary mb-4">
+                                <i class="fas fa-history"></i> Previous Passport (If Applicable)
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.previous_passport_number.id_for_label }}" class="font-weight-bold">
+                                        Previous Passport Number
+                                    </label>
+                                    {{ form.previous_passport_number }}
+                                    {% if form.previous_passport_number.errors %}
+                                        <div class="text-danger small mt-1">{{ form.previous_passport_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.previous_passport_issue_date.id_for_label }}" class="font-weight-bold">
+                                        Issue Date
+                                    </label>
+                                    {{ form.previous_passport_issue_date }}
+                                    {% if form.previous_passport_issue_date.errors %}
+                                        <div class="text-danger small mt-1">{{ form.previous_passport_issue_date.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Document Uploads -->
+                        <div class="form-section mb-5">
+                            <h4 class="section-title text-primary mb-4">
+                                <i class="fas fa-file-upload"></i> Required Documents
+                            </h4>
+                            <div class ="alert alert-info mb-4">
+                                <strong>Important:</strong> Please ensure all documents are clear and readable. Maximum file size: 5MB per file.
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.passport_photo.id_for_label }}" class="font-weight-bold">
+                                    Passport Photo <span class="text-danger">*</span>
+                                </label>
+                                {{ form.passport_photo }}
+                                <small class="form-text text-muted">{{ form.passport_photo.help_text }}</small>
+                                {% if form.passport_photo.errors %}
+                                    <div class="text-danger small mt-1">{{ form.passport_photo.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.birth_certificate.id_for_label }}" class="font-weight-bold">
+                                    Birth Certificate <span class="text-danger">*</span>
+                                </label>
+                                {{ form.birth_certificate }}
+                                <small class="form-text text-muted">{{ form.birth_certificate.help_text }}</small>
+                                {% if form.birth_certificate.errors %}
+                                    <div class="text-danger small mt-1">{{ form.birth_certificate.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="{{ form.national_id.id_for_label }}" class="font-weight-bold">
+                                    National ID <span class="text-danger">*</span>
+                                </label>
+                                {{ form.national_id }}
+                                <small class="form-text text-muted">{{ form.national_id.help_text }}</small>
+                                {% if form.national_id.errors %}
+                                    <div class="text-danger small mt-1">{{ form.national_id.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Terms and Conditions -->
+                        <div class="form-section mb-4">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="termsCheck" required>
+                                <label class="custom-control-label" for="termsCheck">
+                                    I declare that all information provided is true and accurate. I understand that providing false information may result in application rejection. <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Buttons -->
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-paper-plane"></i> Submit Application
+                            </button>
+                            <a href="{% url 'applications:passport-start' %}" class="btn btn-secondary btn-lg px-5 ml-3">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .section-title {
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+    .form-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+    }
+    label {
+        color: #333;
+    }
+    .text-danger {
+        font-weight: bold;
+    }
+</style>
+
+<script>
+    document.getElementById('passportForm').addEventListener('submit', function(e) {
+        const termsCheck = document.getElementById('termsCheck');
+        if (!termsCheck.checked) {
+            e.preventDefault();
+            alert('Please accept the terms and conditions to continue.');
+            return false;
+        }
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white py-4">
+                    <h2 class="mb-0"><i class="fas fa-folder-open"></i> My Passport Applications</h2>
+                </div>
+                <div class="card-body p-4">
+                    {% if applications %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Application ID</th>
+                                        <th>Passport Type</th>
+                                        <th>Status</th>
+                                        <th>Submitted Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for app in applications %}
+                                    <tr>
+                                        <td><code>{{ app.id|truncatechars:13 }}</code></td>
+                                        <td>
+                                            {% if app.passport_details %}
+                                                {{ app.passport_details.passport_type }}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if app.status == 'Pending' %}
+                                                <span class="badge badge-warning">{{ app.status }}</span>
+                                            {% elif app.status == 'Submitted' %}
+                                                <span class="badge badge-info">{{ app.status }}</span>
+                                            {% elif app.status == 'Processing' %}
+                                                <span class="badge badge-primary">{{ app.status }}</span>
+                                            {% elif app.status == 'Approved' %}
+                                                <span class="badge badge-success">{{ app.status }}</span>
+                                            {% elif app.status == 'Rejected' %}
+                                                <span class="badge badge-danger">{{ app.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ app.submitted_at|date:"M d, Y" }}</td>
+                                        <td>
+                                            <a href="{% url 'application-detail' app.id %}" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-eye"></i> View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-folder-open fa-5x text-muted mb-4"></i>
+                            <h4 class="text-muted">No Applications Found</h4>
+                            <p class="text-muted">You haven't submitted any passport applications yet.</p>
+                            <a href="{% url 'passport-start' %}" class="btn btn-primary btn-lg mt-3">
+                                <i class="fas fa-plus-circle"></i> Apply for Passport
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

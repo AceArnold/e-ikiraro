@@ -38,6 +38,7 @@ SITE_ID=2
 INSTALLED_APPS = [
     'e_ikiraro.apps.EIkiraroConfig',
     'users.apps.UsersConfig',
+    'applications.apps.ApplicationsConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'django.contrib.admin',

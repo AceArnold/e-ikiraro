@@ -48,6 +48,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', user_views.profile, name='profile'),
+    path('passport/', include('applications.urls')),
     path('verify-otp/<uidb64>/', user_views.verify_otp, name='verify-otp'),
     path('resend-otp/<uidb64>/', user_views.resend_otp, name='resend-otp'),
 

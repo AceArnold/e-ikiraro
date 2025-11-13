@@ -1,0 +1,89 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h2 class="mb-0">Apply for a Burundian Passport</h2>
+                </div>
+                <div class="card-body p-5">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="text-primary mb-4">Passport Application Service</h4>
+                            <p class="lead">Apply for your Burundian passport online quickly and securely.</p>
+                            
+                            <h5 class="mt-4 mb-3">Required Documents:</h5>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Recent passport-sized photograph (JPEG/PNG)</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Birth certificate (PDF or Image)</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> National ID card (PDF or Image)</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Previous passport (if renewal)</li>
+                            </ul>
+                            
+                            <h5 class="mb-3">Application Process:</h5>
+                            <ol class="mb-4">
+                                <li class="mb-2">Fill out the application form with accurate information</li>
+                                <li class="mb-2">Upload required documents</li>
+                                <li class="mb-2">Make payment using Mobile Money, Bank Transfer, or Credit Card</li>
+                                <li class="mb-2">Receive confirmation and track your application</li>
+                                <li class="mb-2">Collect your passport when ready</li>
+                            </ol>
+                            
+                            <div class="alert alert-info">
+                                <strong>Processing Time:</strong> Typically 10-15 business days
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Service Fee</h5>
+                                    <h2 class="text-primary mb-3">{{ service.base_fee }} BIF</h2>
+                                    
+                                    <div class="mb-4">
+                                        <h6 class="text-muted">Passport Types:</h6>
+                                        <ul class="list-unstyled small">
+                                            <li>Ordinary Passport</li>
+                                            <li>Official Passport</li>
+                                            <li>Diplomatic Passport</li>
+                                            <li>Emergency Travel Document</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <a href="{% url 'passport-apply' %}" class="btn btn-primary btn-lg btn-block">
+                                        Start Application
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h6 class="card-title">Need Help?</h6>
+                                    <p class="small mb-2">Contact our support team:</p>
+                                    <p class="small mb-0">
+                                        <i class="fas fa-phone"></i> +257 XX XXX XXX<br>
+                                        <i class="fas fa-envelope"></i> support@e-ikiraro.bi
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-group-item {
+        border: none;
+        padding: 0.75rem 0;
+    }
+    .list-group-item i {
+        margin-right: 10px;
+    }
+</style>
+{% endblock content %}
