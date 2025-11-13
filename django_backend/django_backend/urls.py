@@ -20,9 +20,10 @@ from django.urls import path, include
 from users import views as user_views
 from ninja import NinjaAPI
 from django.conf import settings
+from users import views as user_views
 from django.conf.urls.static import static
 from e_ikiraro.api import (
-    service_router, application_router, passport_router,
+    service_router, passport_router,
     id_router, license_router, payment_router, document_router, user_router
 )
 
@@ -30,7 +31,6 @@ from e_ikiraro.api import (
 api = NinjaAPI()
 
 api.add_router("/services", service_router)
-api.add_router("/applications", application_router)
 api.add_router("/passport", passport_router)
 api.add_router("/national-id", id_router)
 api.add_router("/license", license_router)
@@ -44,12 +44,19 @@ urlpatterns = [
     path('', include('e_ikiraro.urls')),
     path('register/', user_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    # allauth routes (social login, callbacks)
+    path('accounts/', include('allauth.urls')),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', user_views.profile, name='profile'),
-    path('api/', api.urls),
     path('passport/', include('applications.urls')),
+    path('verify-otp/<uidb64>/', user_views.verify_otp, name='verify-otp'),
+    path('resend-otp/<uidb64>/', user_views.resend_otp, name='resend-otp'),
+
+
+    path('api/', api.urls),
 
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

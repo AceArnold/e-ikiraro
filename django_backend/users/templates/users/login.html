@@ -9,9 +9,12 @@
             {% csrf_token %}
             <fieldset class="form-group">
                 {{ form|crispy }}
-                
+                {% load socialaccount  %}
             </fieldset>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary rounded-pill">Login</button>
+                <center>Or</center>
+                <a class="link" href="{% provider_login_url 'google' %}">Sign in with Google</a>
+
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
