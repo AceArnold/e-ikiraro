@@ -62,6 +62,45 @@ def submit_license_application(
         driving_school_certificate=driving_school_certificate if driving_school_certificate else "",
         status="Pending"
     )
+
+    # Create Document records for each uploaded file so they appear in Documents table
+    try:
+        Document.objects.create(
+            user=user,
+            drivers_license_application=license_app,
+            document_type='License Photo',
+            file=photo
+        )
+        Document.objects.create(
+            user=user,
+            drivers_license_application=license_app,
+            document_type='Medical Certificate',
+            file=medical_certificate
+        )
+        Document.objects.create(
+            user=user,
+            drivers_license_application=license_app,
+            document_type='Eye Test Certificate',
+            file=eye_test_certificate
+        )
+        Document.objects.create(
+            user=user,
+            drivers_license_application=license_app,
+            document_type='National ID',
+            file=national_id
+        )
+        if driving_school_certificate:
+            Document.objects.create(
+                user=user,
+                drivers_license_application=license_app,
+                document_type='Driving School Certificate',
+                file=driving_school_certificate
+            )
+    except Exception:
+        # If document creation fails, continue — application has been created.
+        # Logging could be added here in future.
+        pass
+
     return {"message": "Application submitted successfully", "id": str(license_app.id)}
 
 
@@ -146,6 +185,31 @@ def submit_passport_application(request,
         national_id=national_id,
         status='Pending',
     )
+
+    # Create Document records for the uploaded files so they appear in Documents table
+    try:
+        Document.objects.create(
+            user=user,
+            passport_application=app,
+            document_type='Passport Photo',
+            file=passport_photo
+        )
+        Document.objects.create(
+            user=user,
+            passport_application=app,
+            document_type='Birth Certificate',
+            file=birth_certificate
+        )
+        Document.objects.create(
+            user=user,
+            passport_application=app,
+            document_type='National ID',
+            file=national_id
+        )
+    except Exception:
+        # don't fail the API if document records can't be created; app already saved
+        pass
+
     return {"message": "Passport submitted", "id": str(app.id)}
 
 
@@ -168,6 +232,18 @@ def submit_national_id_application(request,
         address=address,
         status='Pending',
     )
+
+    # Create Document record for the birth certificate so it appears in Documents table
+    try:
+        Document.objects.create(
+            user=user,
+            national_id_application=app,
+            document_type='Birth Certificate',
+            file=birth_certificate
+        )
+    except Exception:
+        pass
+
     return {"message": "National ID submitted", "id": str(app.id)}
 
 
