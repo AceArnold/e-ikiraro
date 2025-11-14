@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .forms import PassportApplicationForm
-from e_ikiraro.models import PassportApplication, Service, Payment
+from e_ikiraro.models import PassportApplication, Service, Payment, Document
 from decimal import Decimal
 import uuid
  
@@ -57,6 +57,33 @@ def passport_application_form(request):
                         if not passport_app.email:
                             passport_app.email = request.user.email
                     passport_app.save()
+
+                    # Create Document records so uploaded files appear in the Documents table
+                    try:
+                        if passport_app.passport_photo:
+                            Document.objects.create(
+                                user=request.user,
+                                passport_application=passport_app,
+                                document_type='Passport Photo',
+                                file=passport_app.passport_photo
+                            )
+                        if passport_app.birth_certificate:
+                            Document.objects.create(
+                                user=request.user,
+                                passport_application=passport_app,
+                                document_type='Birth Certificate',
+                                file=passport_app.birth_certificate
+                            )
+                        if passport_app.national_id:
+                            Document.objects.create(
+                                user=request.user,
+                                passport_application=passport_app,
+                                document_type='National ID',
+                                file=passport_app.national_id
+                            )
+                    except Exception:
+                        # Don't fail the whole submission if Document creation fails; app already saved.
+                        pass
 
                     # Store additional form data in session for payment
                     request.session['passport_app_data'] = {
