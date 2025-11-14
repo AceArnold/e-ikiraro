@@ -80,3 +80,50 @@ python manage.py createsuperuser
 ```
 
 Follow the prompts to create a username, email, and password. You can then log in to the admin panel at `http://127.0.0.1:8000/admin`.
+
+## Environment variables & secrets
+
+Secrets (SECRET_KEY, SMTP credentials, OAuth client IDs/secrets) must not be committed to the repository. We provide a template you should copy and fill locally.
+
+1. Copy the template to create a local `.env` file (DO NOT commit `.env`):
+
+```bash
+cp django_backend/.env.example django_backend/.env
+# open and fill values (SECRET_KEY, EMAIL_HOST_PASSWORD, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, etc.)
+```
+
+2. The repository already ignores local secret files (`.env` and `client_secret_*.json`). Do NOT add secrets to git. If a secret was accidentally committed, rotate it immediately.
+
+3. The project loads environment variables from your local `.env` (settings use `python-decouple` / `decouple.config`) so the app reads credentials at runtime.
+
+## Google social login (allauth)
+
+We support signing in with Google using `django-allauth`. To avoid committing the client secret to the repo, follow one of these approaches.
+
+A) Create the SocialApp from environment variables (recommended for local/dev):
+
+1. Add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` to `django_backend/.env`.
+2. Run migrations and then run the helper management command which reads the env vars and creates/updates the SocialApp in the DB:
+
+```bash
+source venv/bin/activate
+cd django_backend
+python manage.py migrate
+python manage.py create_socialapp
+```
+
+This command will attach the SocialApp to site id 1.
+
+B) Or create the SocialApp via Django admin:
+
+1. Start the server and log in to the admin at `/admin/`.
+2. Under Social Accounts → Social applications, add a new app for provider `google`, paste the client id and secret, and attach the site.
+
+Notes:
+- Make sure the OAuth redirect URI registered in Google Cloud matches your dev server (e.g. `http://127.0.0.1:8000/accounts/google/login/callback/`).
+- Keep client secrets out of source control. If a secret was pushed to a remote, rotate it immediately in the Google Cloud Console.
+
+## Troubleshooting
+
+- If email sending fails in development, you can use the console email backend by setting `EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend` in your local `.env`.
+- If `create_socialapp` reports the env vars are missing, ensure you exported them or placed them in `django_backend/.env` and that your virtualenv is active.

@@ -1,6 +1,135 @@
 {% extends "e_ikiraro/base.html" %}
 {% block content %}
-    <h1>Home Page</h1>
-    <p>Welcome to the E-Ikiraro home page.</p>
+   
+
+    <section id="home" class="hero">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-subtitle">E-IKIRARO</div>
+            <h1>Bridging Citizens to Services</h1>
+            <p class="subtitle">E-Ikiraro is a simple online platform that helps Burundians access key government services quickly and conveniently</p>
+            <a href="#portfolio" class="cta-button">Our Services</a>
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView()"></div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title fade-in">About E-ikiraro</h2>
+            <div class="about-content">
+                <div class="about-image slide-in-left"></div>
+                <div class="about-text slide-in-right">
+                    <h3>E-Ikiraro is a simple online platform that helps Burundians access key government services quickly and conveniently.</h3>
+
+                    <p>E-Ikiraro is a digital platform designed to make access to public services in Burundi fast, simple, and transparent. 
+                      It allows citizens to apply for key documents such as national IDs, passports, and driver’s licenses online — reducing long queues, travel costs, and manual paperwork. 
+                      The system is built to match Burundi’s digital needs, ensuring ease of use, mobile access, and secure data handling. 
+                      E-Ikiraro aims to bridge the gap between citizens and government services by providing a modern, reliable, and user-friendly solution.
+                    </p>
+
+                    <div class="skills">
+                        <span class="skill-tag">Driver licenses application</span>
+                        <span class="skill-tag">National-ID application</span>
+                        <span class="skill-tag">passports application</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Services</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image"></div>
+                    <div class="portfolio-content">
+                        <a href="pages/Service_page_1.html">
+                          <div>
+                            <h4>Driver’s License Application</h4>
+                          </div>
+                        </a>
+                        <p>Apply online for your driver’s license with a simple and faster process. Submit your details, track your application, and receive updates without long queues.</p>
+                          <div class="portfolio-tech">
+                            <span class="tech-tag">Provisional driver's Lisence</span>
+                            <span class="tech-tag">Practical driver's Lisence</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image"></div>
+                    <div class="portfolio-content">
+                        <h4>Brand Identity System</h4>
+                        <p>Complete visual identity redesign for a tech startup, including logo, guidelines, and digital assets. Creating a cohesive brand experience across all touchpoints.</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">Illustrator</span>
+                            <span class="tech-tag">Photoshop</span>
+                            <span class="tech-tag">Figma</span>
+                            <span class="tech-tag">After Effects</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image"></div>
+                    <div class="portfolio-content">
+                        <h4>Mobile App Design</h4>
+                        <p>Intuitive mobile app interface for a fitness tracking application with focus on accessibility and user engagement through gamification.</p>
+                        <div class="portfolio-tech">
+                            <span class="tech-tag">Figma</span>
+                            <span class="tech-tag">Principle</span>
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Lottie</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-floating-shapes">
+            <div class="contact-shape contact-shape-1"></div>
+            <div class="contact-shape contact-shape-2"></div>
+            <div class="contact-shape contact-shape-3"></div>
+            <div class="contact-shape contact-shape-4"></div>
+            <div class="contact-shape contact-shape-5"></div>
+            <div class="contact-shape contact-shape-6"></div>
+        </div>
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title fade-in">Let's Work Together</h2>
+                <p class="fade-in">Have questions or need support? Reach out to our team for assistance with E-Ikiraro services, feedback, or general inquiries. We’re here to help.</p>
+                <form class="contact-form fade-in">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">How can we help you</label>
+                        <textarea id="message" name="message" rows="6" placeholder="Tell me about your project..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
     

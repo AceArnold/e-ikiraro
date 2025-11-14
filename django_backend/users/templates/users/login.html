@@ -1,24 +1,26 @@
-{% extends "e_ikiraro/base.html" %}
+{% extends "users/base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
+
 {% block content %}
-    <h1>Login Page</h1>
-    <p>Please Login to continue.</p>
-    <div class="content-section">
+    <div class="login-container">
+        <h2>Login to E-ikiraro</h2>
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Log In</legend>
                 {{ form|crispy }}
+                {% load socialaccount  %}
             </fieldset>
-            <div class="form-group">
-                <button type="submit " class="btn btn-primary">Login</button>
-            </div>
+                <button type="submit" class="btn btn-primary rounded-pill">Login</button>
+                <center>Or</center>
+                <a class="link" href="{% provider_login_url 'google' %}">Sign in with Google</a>
+
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                DOn't have an account? <a class="ml-2" href="{% url 'register' %}">Sign up</a>
+                Don't have an account? <a class="ml-1" href="{% url 'register' %}">Sign Up</a>
             </small>
         </div>
-
     </div>
+
 {% endblock content %}

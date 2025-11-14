@@ -1,0 +1,117 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #2b2e97, #7b2cbf);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+/* Floating shapes same as login */
+.contact-floating-shapes div {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  filter: blur(30px);
+}
+
+.contact-shape-1 { width: 150px; height: 150px; top: 10%; left: 10%; }
+.contact-shape-2 { width: 100px; height: 100px; bottom: 20%; right: 15%; }
+.contact-shape-3 { width: 120px; height: 120px; top: 30%; right: 25%; }
+.contact-shape-4 { width: 80px; height: 80px; bottom: 10%; left: 20%; }
+.contact-shape-5 { width: 200px; height: 200px; top: 60%; left: 70%; }
+.contact-shape-6 { width: 60px; height: 60px; bottom: 5%; right: 5%; }
+
+/* Register Section */
+.register-section {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.register-container {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 50px 60px;
+  width: 450px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.register-subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #fff;
+  font-size: 15px;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #6366f1, #7c3aed);
+  border: none;
+  color: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(90deg, #7c3aed, #6366f1);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #a78bfa;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
