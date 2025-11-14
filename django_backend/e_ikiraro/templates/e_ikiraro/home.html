@@ -1,4 +1,4 @@
-{% extends "e_ikiraro/base.html" %}
+{% extends "e_ikiraro/home-base.html" %}
 {% block content %}
    
 
@@ -51,7 +51,7 @@
                 <div class="portfolio-item">
                     <div class="portfolio-image"></div>
                     <div class="portfolio-content">
-                        <a href="pages/Service_page_1.html">
+                        <a href="{% url 'applications:passport-start' %}">
                           <div>
                             <h4>Driver’s License Application</h4>
                           </div>

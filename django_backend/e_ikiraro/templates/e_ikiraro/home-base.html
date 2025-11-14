@@ -25,10 +25,10 @@
         <div class="nav-container">
             <div class="logo">E-IKIRARO</div>
             <ul class="nav-links">
-                <li><a href="{% url 'e-ikiraro-home' %}">Home</a></li>
-                <li><a href="{% url 'e-ikiraro-home' %}">About</a></li>
-                <li><a href="{% url 'e-ikiraro-home' %}">Services</a></li>
-                <li><a href="{% url 'e-ikiraro-home' %}">Contact</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
                 <li><a href="{% url 'e-ikiraro-documents' %}">Documents</a></li>
                 <li><a href="{% url 'login' %}">login</a></li>
             </ul>
@@ -62,7 +62,21 @@
     
     {% block content %}{% endblock %}
 
-
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>&copy; 2025 Personal Shape. All rights reserved.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Use</a>
+                    <a href="#sitemap">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
     
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

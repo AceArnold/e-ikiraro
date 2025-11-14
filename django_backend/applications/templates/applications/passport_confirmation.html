@@ -1,0 +1,143 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center py-4">
+                    <i class="fas fa-check-circle fa-3x mb-3"></i>
+                    <h2 class="mb-0">Application Submitted Successfully!</h2>
+                </div>
+                <div class="card-body p-5">
+                    <div class="alert alert-success text-center mb-5">
+                        <h5 class="mb-3">Your passport application has been received and is being processed.</h5>
+                        <p class="mb-0">You will receive email notifications about your application status.</p>
+                    </div>
+                    
+                    <!-- Application Summary -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-info-circle"></i> Application Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Application ID:</strong></div>
+                                <div class="col-md-8"><code class="text-primary">{{ passport_app.id }}</code></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Applicant Name:</strong></div>
+                                <div class="col-md-8">{{ app_data.first_name }} {{ app_data.last_name }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Passport Type:</strong></div>
+                                <div class="col-md-8">{{ passport_app.passport_type }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Date of Birth:</strong></div>
+                                <div class="col-md-8">{{ app_data.date_of_birth }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Status:</strong></div>
+                                <div class="col-md-8">
+                                    <span class="badge badge-warning">{{ passport_app.status }}</span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Submitted On:</strong></div>
+                                <div class="col-md-8">{{ passport_app.submitted_at|date:"F d, Y H:i" }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Information -->
+                    {% if payment %}
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-money-bill-wave"></i> Payment Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Transaction ID:</strong></div>
+                                <div class="col-md-8"><code>{{ payment.transaction_id }}</code></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Amount Paid:</strong></div>
+                                <div class="col-md-8"><strong class="text-success">{{ payment.amount }} BIF</strong></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Payment Method:</strong></div>
+                                <div class="col-md-8">{{ payment.payment_method }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Payment Status:</strong></div>
+                                <div class="col-md-8">
+                                    <span class="badge badge-success">{{ payment.status }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Contact Information -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-address-book"></i> Contact Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Email:</strong></div>
+                                <div class="col-md-8">{{ app_data.email }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Phone:</strong></div>
+                                <div class="col-md-8">{{ app_data.phone_number }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Next Steps -->
+                    <div class="alert alert-info">
+                        <h5 class="alert-heading"><i class="fas fa-tasks"></i> Next Steps:</h5>
+                        <ol class="mb-0 pl-3">
+                            <li>Your application will be reviewed within 2-3 business days</li>
+                            <li>You will receive an email notification when your application is approved</li>
+                            <li>Processing typically takes 10-15 business days</li>
+                            <li>You will be notified when your passport is ready for collection</li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="text-center mt-5">
+                        <a href="{% url 'applications:application-detail' passport_app.id %}" class="btn btn-primary btn-lg px-5 mr-3">
+                            <i class="fas fa-eye"></i> View Application Details
+                        </a>
+                        <a href="{% url 'applications:my-applications' %}" class="btn btn-outline-primary btn-lg px-5 mr-3">
+                            <i class="fas fa-list"></i> My Applications
+                        </a>
+                        <a href="{% url 'e-ikiraro-home' %}" class="btn btn-secondary btn-lg px-5">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                    </div>
+                    
+                    <!-- Print Receipt Button -->
+                    <div class="text-center mt-3">
+                        <button onclick="window.print()" class="btn btn-outline-secondary">
+                            <i class="fas fa-print"></i> Print Receipt
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @media print {
+        .btn, nav, footer {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock content %}

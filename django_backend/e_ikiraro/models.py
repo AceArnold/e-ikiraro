@@ -34,6 +34,26 @@ class PassportApplication(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='passport_applications', null=True, blank=True)
+    first_name = models.CharField(max_length=100, null=True, blank=True)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    place_of_birth = models.CharField(max_length=200, null=True, blank=True)
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    ]
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
+    nationality = models.CharField(max_length=100, null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    current_address = models.TextField(null=True, blank=True)
+    father_name = models.CharField(max_length=100, null=True, blank=True)
+    mother_name = models.CharField(max_length=100, null=True, blank=True)
+    emergency_contact_name = models.CharField(max_length=100, null=True, blank=True)
+    emergency_contact_phone = models.CharField(max_length=20, null=True, blank=True)
+    previous_passport_number = models.CharField(max_length=50, blank=True)
+    previous_passport_issue_date = models.DateField(blank=True, null=True)
+    
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     submitted_at = models.DateTimeField(default=timezone.now)
     approved_at = models.DateTimeField(null=True, blank=True)

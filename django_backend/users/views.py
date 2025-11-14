@@ -20,7 +20,7 @@ from .models import EmailOTP
 
 import random
 
-OTP_EXPIRY_MINUTES = 15
+OTP_EXPIRY_MINUTES = 8
 
 def _generate_otp():
     return f"{random.randint(100000, 999999):06d}"
