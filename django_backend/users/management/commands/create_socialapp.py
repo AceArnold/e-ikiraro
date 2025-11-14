@@ -14,7 +14,7 @@ class Command(BaseCommand):
             self.stderr.write(
                 "GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET not set in environment")
             return
-        site = Site.objects.get(pk=1)
+        site = Site.objects.get(pk=2)
         app, created = SocialApp.objects.update_or_create(
             provider='google',
             defaults={'name': 'Google',

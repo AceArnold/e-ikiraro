@@ -48,7 +48,7 @@
                                         </td>
                                         <td>{{ app.submitted_at|date:"M d, Y" }}</td>
                                         <td>
-                                            <a href="{% url 'application-detail' app.id %}" class="btn btn-sm btn-primary">
+                                            <a href="{% url 'applications:application-detail' app.id %}" class="btn btn-sm btn-primary">
                                                 <i class="fas fa-eye"></i> View
                                             </a>
                                         </td>

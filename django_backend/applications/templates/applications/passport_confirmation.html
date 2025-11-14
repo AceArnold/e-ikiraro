@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Application ID:</strong></div>
-                                <div class="col-md-8"><code class="text-primary">{{ application.id }}</code></div>
+                                <div class="col-md-8"><code class="text-primary">{{ passport_app.id }}</code></div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Applicant Name:</strong></div>
@@ -41,12 +41,12 @@
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Status:</strong></div>
                                 <div class="col-md-8">
-                                    <span class="badge badge-warning">{{ application.status }}</span>
+                                    <span class="badge badge-warning">{{ passport_app.status }}</span>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Submitted On:</strong></div>
-                                <div class="col-md-8">{{ application.submitted_at|date:"F d, Y H:i" }}</div>
+                                <div class="col-md-8">{{ passport_app.submitted_at|date:"F d, Y H:i" }}</div>
                             </div>
                         </div>
                     </div>
@@ -110,10 +110,10 @@
                     
                     <!-- Action Buttons -->
                     <div class="text-center mt-5">
-                        <a href="{% url 'application-detail' application.id %}" class="btn btn-primary btn-lg px-5 mr-3">
+                        <a href="{% url 'applications:application-detail' passport_app.id %}" class="btn btn-primary btn-lg px-5 mr-3">
                             <i class="fas fa-eye"></i> View Application Details
                         </a>
-                        <a href="{% url 'my-applications' %}" class="btn btn-outline-primary btn-lg px-5 mr-3">
+                        <a href="{% url 'applications:my-applications' %}" class="btn btn-outline-primary btn-lg px-5 mr-3">
                             <i class="fas fa-list"></i> My Applications
                         </a>
                         <a href="{% url 'e-ikiraro-home' %}" class="btn btn-secondary btn-lg px-5">

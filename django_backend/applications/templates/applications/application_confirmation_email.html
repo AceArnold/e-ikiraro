@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Confirmation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { background-color: #f4f4f4; padding: 10px; text-align: center; }
+        .content { margin: 20px 0; }
+        .receipt { border: 1px solid #ddd; padding: 10px; margin: 10px 0; }
+        .footer { font-size: 12px; color: #666; text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Application Confirmation</h1>
+        <p>Thank you for your application!</p>
+    </div>
+
+    <div class="content">
+        <p>Dear {{ first_name }} {{ last_name }},</p>
+
+        <p>Your application for a {{ service_type }} has been successfully submitted and payment has been processed.</p>
+
+        <h3>Application Details:</h3>
+        <ul>
+            <li><strong>Application ID:</strong> {{ application_id }}</li>
+            <li><strong>Service Type:</strong> {{ service_type }}</li>
+            <li><strong>Submitted At:</strong> {{ submitted_at }}</li>
+            <li><strong>Status:</strong> {{ status }}</li>
+        </ul>
+
+        <h3>Payment Receipt:</h3>
+        <div class="receipt">
+            <p><strong>Transaction ID:</strong> {{ transaction_id }}</p>
+            <p><strong>Amount Paid:</strong> ${{ amount }}</p>
+            <p><strong>Payment Method:</strong> {{ payment_method }}</p>
+            <p><strong>Payment Date:</strong> {{ paid_at }}</p>
+            <p><strong>Provider Reference:</strong> {{ provider_reference }}</p>
+        </div>
+
+        <p>If you have any questions, please contact our support team.</p>
+
+        <p>Best regards,<br>The E-Ikiraro Team</p>
+    </div>
+
+    <div class="footer">
+        <p>This is an automated email. Please do not reply.</p>
+    </div>
+</body>
+</html>
