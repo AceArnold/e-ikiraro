@@ -1,11 +1,23 @@
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
 from django.contrib import messages
 from django.db import transaction
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from .forms import PassportApplicationForm
-from e_ikiraro.models import PassportApplication, Application, Service, Payment
+from e_ikiraro.models import PassportApplication, Service, Payment
 from decimal import Decimal
 import uuid
+ 
+
+
+
+
+
+
 
 
 @login_required
@@ -21,7 +33,7 @@ def passport_application_start(request):
         'title': 'Apply for Passport',
         'service': passport_service
     }
-    return render(request, 'e_ikiraro/passport/passport_start.html', context)
+    return render(request, 'applications/passport_start.html', context)
 
 
 @login_required
@@ -32,18 +44,9 @@ def passport_application_form(request):
         if form.is_valid():
             try:
                 with transaction.atomic():
-                    # Get the passport service
-                    passport_service = Service.objects.get(name='Passport Application')
-                    
-                    # Create the main application
-                    application = Application.objects.create(
-                        user=request.user,
-                        service=passport_service,
-                        status='Pending'
-                    )
-                    
-                    # Create the passport application
+                    # Create the passport application directly
                     passport_app = form.save(commit=False)
+                    passport_app.user = request.user
                     # If user is authenticated, fill missing personal fields from their profile
                     # (Django's auth.User has first_name, last_name, email)
                     if request.user.is_authenticated:
@@ -53,12 +56,11 @@ def passport_application_form(request):
                             passport_app.last_name = request.user.last_name
                         if not passport_app.email:
                             passport_app.email = request.user.email
-                    passport_app.application = application
                     passport_app.save()
-                    
+
                     # Store additional form data in session for payment
                     request.session['passport_app_data'] = {
-                        'application_id': str(application.id),
+                        'application_id': str(passport_app.id),
                         'first_name': form.cleaned_data['first_name'],
                         'last_name': form.cleaned_data['last_name'],
                         'date_of_birth': form.cleaned_data['date_of_birth'].isoformat(),
@@ -75,12 +77,10 @@ def passport_application_form(request):
                         'previous_passport_number': form.cleaned_data.get('previous_passport_number', ''),
                         'previous_passport_issue_date': form.cleaned_data.get('previous_passport_issue_date').isoformat() if form.cleaned_data.get('previous_passport_issue_date') else '',
                     }
-                    
+
                     messages.success(request, 'Application submitted successfully! Please proceed to payment.')
-                    return redirect('passport-payment', application_id=application.id)
-                    
-            except Service.DoesNotExist:
-                messages.error(request, 'Passport service not found.')
+                    return redirect('applications:passport-payment', application_id=passport_app.id)
+
             except Exception as e:
                 messages.error(request, f'An error occurred: {str(e)}')
     else:
@@ -94,7 +94,7 @@ def passport_application_form(request):
             form = PassportApplicationForm(initial=initial)
         else:
             form = PassportApplicationForm()
-    
+
     context = {
         'title': 'Passport Application Form',
         'form': form
@@ -105,105 +105,132 @@ def passport_application_form(request):
 @login_required
 def passport_payment(request, application_id):
     """Payment page for passport application"""
-    application = get_object_or_404(Application, id=application_id, user=request.user)
-    
+    passport_app = get_object_or_404(PassportApplication, id=application_id, user=request.user)
+
     # Check if payment already exists
     existing_payment = Payment.objects.filter(
-        application=application,
+        passport_application=passport_app,
         status='Completed'
     ).first()
-    
+
     if existing_payment:
         messages.info(request, 'Payment already completed for this application.')
-        return redirect('passport-confirmation', application_id=application.id)
-    
+        return redirect('applications:passport-confirmation', application_id=passport_app.id)
+
     if request.method == 'POST':
         payment_method = request.POST.get('payment_method')
         phone_number = request.POST.get('phone_number')
-        
+
         if not payment_method:
             messages.error(request, 'Please select a payment method.')
-            return redirect('passport-payment', application_id=application.id)
-        
+            return redirect('passport-payment', application_id=passport_app.id)
+
         try:
             with transaction.atomic():
+                # Get the service fee
+                passport_service = Service.objects.get(name='Passport Application')
                 # Create payment record
                 payment = Payment.objects.create(
                     user=request.user,
-                    application=application,
+                    passport_application=passport_app,
                     service_type='Passport Application',
-                    amount=application.service.base_fee,
+                    amount=passport_service.base_fee,
                     payment_method=payment_method,
                     transaction_id=f'TXN-{uuid.uuid4().hex[:12].upper()}',
                     provider_reference=f'REF-{uuid.uuid4().hex[:12].upper()}',
                     status='Completed'  # In production, this would be 'Pending' until confirmed
                 )
-                
+
                 # Update application status
-                application.status = 'Submitted'
-                application.save()
-                
+                passport_app.status = 'Submitted'
+                passport_app.save()
+
+                # Send confirmation email with receipt
+                try:
+                    subject = f'Application Confirmation - {passport_service.name}'
+                    html_message = render_to_string('applications/application_confirmation_email.html', {
+                        'first_name': passport_app.first_name,
+                        'last_name': passport_app.last_name,
+                        'service_type': passport_service.name,
+                        'application_id': str(passport_app.id),
+                        'submitted_at': passport_app.submitted_at.strftime('%Y-%m-%d %H:%M:%S'),
+                        'status': passport_app.status,
+                        'transaction_id': payment.transaction_id,
+                        'amount': payment.amount,
+                        'payment_method': payment.payment_method,
+                        'paid_at': payment.paid_at.strftime('%Y-%m-%d %H:%M:%S'),
+                        'provider_reference': payment.provider_reference,
+                    })
+                    plain_message = strip_tags(html_message)
+                    from_email = settings.EMAIL_FROM
+                    to_email = passport_app.email
+
+                    send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
+                except Exception as e:
+                    # Log the error but don't fail the application process
+                    print(f"Failed to send confirmation email: {str(e)}")
+
                 messages.success(request, 'Payment successful! Your application has been submitted.')
-                return redirect('passport-confirmation', application_id=application.id)
-                
+                return redirect('applications:passport-confirmation', application_id=passport_app.id)
+
+        except Service.DoesNotExist:
+            messages.error(request, 'Passport service not found.')
         except Exception as e:
             messages.error(request, f'Payment failed: {str(e)}')
-    
+
+    # Get service for context
+    passport_service = Service.objects.get(name='Passport Application')
+
     context = {
         'title': 'Payment',
-        'application': application,
-        'service': application.service,
-        'amount': application.service.base_fee
+        'passport_app': passport_app,
+        'service': passport_service,
+        'amount': passport_service.base_fee
     }
-    return render(request, 'e_ikiraro/passport/passport_payment.html', context)
+    return render(request, 'applications/passport_payment.html', context)
 
 
 @login_required
 def passport_confirmation(request, application_id):
     """Confirmation page after successful application"""
-    application = get_object_or_404(Application, id=application_id, user=request.user)
-    passport_app = get_object_or_404(PassportApplication, application=application)
-    payment = Payment.objects.filter(application=application).first()
-    
+    passport_app = get_object_or_404(PassportApplication, id=application_id, user=request.user)
+    payment = Payment.objects.filter(passport_application=passport_app).first()
+
     # Get stored application data from session
     app_data = request.session.get('passport_app_data', {})
-    
+
     context = {
         'title': 'Application Confirmation',
-        'application': application,
         'passport_app': passport_app,
         'payment': payment,
         'app_data': app_data
     }
-    return render(request, 'e_ikiraro/passport/passport_confirmation.html', context)
+    return render(request, 'applications/passport_confirmation.html', context)
 
 
 @login_required
 def my_applications(request):
     """View all user's passport applications"""
-    applications = Application.objects.filter(
-        user=request.user,
-        service__name='Passport Application'
+    applications = PassportApplication.objects.filter(
+        user=request.user
     ).order_by('-submitted_at')
-    
+
     context = {
         'title': 'My Applications',
         'applications': applications
     }
-    return render(request, 'e_ikiraro/passport/my_applications.html', context)
+    return render(request, 'applications/my_applications.html', context)
 
 
 @login_required
 def application_detail(request, application_id):
     """View details of a specific application"""
-    application = get_object_or_404(Application, id=application_id, user=request.user)
-    passport_app = get_object_or_404(PassportApplication, application=application)
-    payments = Payment.objects.filter(application=application)
-    
+    passport_app = get_object_or_404(PassportApplication, id=application_id, user=request.user)
+    payments = Payment.objects.filter(passport_application=passport_app)
+
     context = {
         'title': 'Application Details',
-        'application': application,
         'passport_app': passport_app,
         'payments': payments
     }
-    return render(request, 'e_ikiraro/passport/application_detail.html', context)
+    return render(request, 'applications/application_detail.html', context)
