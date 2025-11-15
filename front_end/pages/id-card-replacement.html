@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Card Replacement | E-ikiraro</title>
+  <link rel="stylesheet" href="../styles/application-form.css">
+</head>
+<body>
+  <header>
+    <h1>E-ikiraro ID Card Replacement</h1>
+    <p>Replace your lost, stolen, or damaged ID card</p>
+  </header>
+
+  <main>
+    <section class="form-container">
+      <form id="id-card-replacement-form">
+        <div class="form-section">
+          <h2>Personal Information</h2>
+          
+          <div class="form-group">
+            <label for="full-name">Full Name (as per current ID) *</label>
+            <input type="text" id="full-name" name="full-name" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="current-id-number">Current ID Number *</label>
+              <input type="text" id="current-id-number" name="current-id-number" pattern="[0-9]{16}" placeholder="16-digit ID number" required>
+            </div>
+
+            <div class="form-group">
+              <label for="date-of-birth">Date of Birth *</label>
+              <input type="date" id="date-of-birth" name="date-of-birth" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Reason for Replacement</h2>
+
+          <div class="form-group">
+            <label for="replacement-reason">Reason *</label>
+            <select id="replacement-reason" name="replacement-reason" required>
+              <option value="">Select Reason</option>
+              <option value="lost">Lost</option>
+              <option value="stolen">Stolen</option>
+              <option value="damaged">Damaged</option>
+              <option value="name-change">Name Change</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="police-report-group" style="display: none;">
+            <label for="police-report">Police Report Number *</label>
+            <input type="text" id="police-report" name="police-report">
+            <small>Required for lost or stolen IDs</small>
+          </div>
+
+          <div class="form-group">
+            <label for="details">Additional Details *</label>
+            <textarea id="details" name="details" rows="4" placeholder="Provide details about the incident or reason for replacement" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Contact Information</h2>
+
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" placeholder="+257 XX XXX XXX" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Current Residential Address *</label>
+            <textarea id="address" name="address" rows="3" placeholder="Province, District, Sector, Cell, Village" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Document Upload</h2>
+
+          <div class="form-group">
+            <label for="photo">Recent Photo *</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+            <small>Passport-size photo with white background</small>
+          </div>
+
+          <div class="form-group">
+            <label for="police-report-doc">Police Report Document</label>
+            <input type="file" id="police-report-doc" name="police-report-doc" accept="image/*,application/pdf">
+            <small>Required for lost or stolen IDs</small>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Declaration</h2>
+          
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="declaration" name="declaration" required>
+            <label for="declaration">I declare that all information provided is true. I understand that providing false information is a criminal offense and may result in prosecution. *</label>
+          </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="window.history.back()">Cancel</button>
+          <button type="submit" class="btn-primary">Submit Replacement Request</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../scripts/id-card-replacement.js"></script>
+</body>
+</html>
