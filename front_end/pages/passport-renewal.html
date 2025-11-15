@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passport Renewal | E-ikiraro</title>
+  <link rel="stylesheet" href="../styles/application-form.css">
+</head>
+<body>
+  <header>
+    <h1>E-ikiraro Passport Renewal</h1>
+    <p>Renew your passport before it expires</p>
+  </header>
+
+  <main>
+    <section class="form-container">
+      <form id="passport-renewal-form">
+        <div class="form-section">
+          <h2>Personal Information</h2>
+          
+          <div class="form-group">
+            <label for="full-name">Full Name (as per current passport) *</label>
+            <input type="text" id="full-name" name="full-name" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date-of-birth">Date of Birth *</label>
+              <input type="date" id="date-of-birth" name="date-of-birth" required>
+            </div>
+
+            <div class="form-group">
+              <label for="national-id">National ID Number *</label>
+              <input type="text" id="national-id" name="national-id" pattern="[0-9]{16}" placeholder="16-digit ID number" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Current Passport Details</h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="current-passport-number">Current Passport Number *</label>
+              <input type="text" id="current-passport-number" name="current-passport-number" required>
+            </div>
+
+            <div class="form-group">
+              <label for="issue-date">Issue Date *</label>
+              <input type="date" id="issue-date" name="issue-date" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="expiry-date">Expiry Date *</label>
+            <input type="date" id="expiry-date" name="expiry-date" required>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Contact Information</h2>
+
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" placeholder="+257 XX XXX XXX" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Current Residential Address *</label>
+            <textarea id="address" name="address" rows="3" placeholder="Province, District, Sector, Cell, Village" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>New Passport Details</h2>
+
+          <div class="form-group">
+            <label for="validity-period">Validity Period *</label>
+            <select id="validity-period" name="validity-period" required>
+              <option value="">Select Period</option>
+              <option value="5">5 Years</option>
+              <option value="10">10 Years</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Document Upload</h2>
+
+          <div class="form-group">
+            <label for="photo">New Passport Photo *</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+            <small>Recent passport-size photo (white background, 4x6cm)</small>
+          </div>
+
+          <div class="form-group">
+            <label for="current-passport-copy">Current Passport Copy *</label>
+            <input type="file" id="current-passport-copy" name="current-passport-copy" accept="image/*,application/pdf" required>
+            <small>Clear copy of bio-data page</small>
+          </div>
+
+          <div class="form-group">
+            <label for="id-copy">National ID Copy *</label>
+            <input type="file" id="id-copy" name="id-copy" accept="image/*,application/pdf" required>
+            <small>Clear copy of both sides</small>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Declaration</h2>
+          
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="declaration" name="declaration" required>
+            <label for="declaration">I declare that all information provided is true and accurate. *</label>
+          </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="window.history.back()">Cancel</button>
+          <button type="submit" class="btn-primary">Submit Renewal</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../scripts/passport-renewal.js"></script>
+</body>
+</html>

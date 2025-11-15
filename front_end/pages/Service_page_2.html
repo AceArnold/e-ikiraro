@@ -1,79 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passport Application</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passport Services | E-ikiraro</title>
+  <link rel="stylesheet" href="../styles/Service_page_2.css">
 </head>
-
 <body>
-    <header>
-        <h1>Passport Application</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#requirements">Requirements</a></li>
-                <li><a href="#application-form">Application Form</a></li>
-                <li><a href="#contact">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>E-ikiraro Passport Services</h1>
+    <p>Apply for your passport conveniently online.</p>
+  </header>
 
-    <main>
-        <section id="requirements">
-            <h2>Passport Requirements</h2>
-            <p>To apply for a passport, you need to provide the following documents:</p>
-            <ul>
-                <li>Proof of citizenship (e.g., birth certificate)</li>
-                <li>Government-issued photo ID (e.g., driver's license)</li>
-                <li>Passport-sized photographs</li>
-                <li>Completed application form</li>
-            </ul>
-        </section>
+  <main>
+    <section class="service-options">
+      <h2>Select a Service</h2>
+      <div class="options">
+        <div class="card" id="new-passport-card">
+          <h3>New Passport Application</h3>
+          <p>Apply for your first passport or get a new one if your previous passport has expired.</p>
+          <button id="new-passport-btn">Apply Now</button>
+        </div>
 
-        <section id="application-form">
-            <h2>Application Form</h2>
-            <form action="#" method="post">
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name" required>
+        <div class="card" id="renewal-card">
+          <h3>Passport Renewal</h3>
+          <p>Renew your existing passport before it expires or if it has recently expired.</p>
+          <button id="renewal-btn">Renew Passport</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required>
-
-                <label for="address">Address:</label>
-                <textarea id="address" name="address" required></textarea>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone">
-
-                <p>Upload the reuiqred documents</p>
-
-                <label for="Birth_Certificate">Birth Certificate:</label>
-                <input type="file" id="Birth_Certificate" name="Birth_Certificate" accept=".jpg,.jpeg,.png,.pdf" multiple required>
-
-                <label for="National_ID">National ID:</label>
-                <input type="file" id="National_ID" name="National_ID" accept=".jpg,.jpeg,.png,.pdf" multiple required>
-
-                <label for="Photo">Passport sized photo:</label>
-                <input type="file" id="photo" name="photo" accept=".jpg,.jpeg,.png" multiple required>
-
-                <button type="submit">Submit Application</button>
-            </form>
-        </section>
-
-    </main>
-
-    <footer>    
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <p>If you have any questions or need assistance, please contact us at:</p>
-            <p>Email: <a href="mailto:
+  <script src="../scripts/Service_page_2.js"></script>
+</body>
 </html>
