@@ -2,9 +2,10 @@
 
 **E-ikiraro** is a comprehensive web application for managing government document applications and services in Burundi. It streamlines the process for citizens to apply for passports, national IDs, and driver's licenses through an intuitive online platform with secure payment integration and real-time application tracking.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
+- [Demo Video](#-demo-video)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Setup and Installation](#setup-and-installation)
@@ -19,7 +20,7 @@
 - [Development Tips](#development-tips)
 - [Troubleshooting](#troubleshooting)
 
-## 🎯 Features
+## Features
 
 ### Core Features
 
@@ -66,7 +67,15 @@
 - Clean card-based UI for applications
 - Bootstrap 5 styling with custom theme
 
-## 📁 Project Structure
+## 🎬 Demo Video
+
+Watch a walkthrough of the E-ikiraro application features and workflows:
+
+[![E-ikiraro Demo](https://img.youtube.com/vi/S2uPNP109bo/maxresdefault.jpg)](https://youtu.be/S2uPNP109bo)
+
+[**Watch on YouTube** →](https://youtu.be/S2uPNP109bo)
+
+## Project Structure
 
 ```
 e-ikiraro/
@@ -134,7 +143,7 @@ e-ikiraro/
 └── requirements.txt            # Root-level dependencies
 ```
 
-## ✅ Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have the following installed on your system:
 
@@ -143,7 +152,7 @@ Before you begin, ensure you have the following installed on your system:
 - **pip** (usually included with Python)
 - **virtualenv** (for virtual environment management)
 
-## 🚀 Setup and Installation
+## Setup and Installation
 
 ### 1. Clone the Repository
 
@@ -216,7 +225,7 @@ GOOGLE_CLIENT_SECRET=your-client-secret
 
 **Important:** Never commit `.env` to version control. The `.gitignore` already excludes it.
 
-## 🗄️ Database Migrations
+## Database Migrations
 
 ### Initial Setup
 
@@ -245,7 +254,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-## ▶️ Running the Application
+## Running the Application
 
 ### Start the Development Server
 
@@ -266,7 +275,7 @@ Verify everything is configured correctly:
 python manage.py check
 ```
 
-## 👨‍💼 Creating a Superuser
+## Creating a Superuser
 
 To access the Django admin panel and manage applications, create a superuser account:
 
@@ -289,7 +298,7 @@ Then log in at [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) with
 - **User Management:** Manage user accounts and permissions
 - **Document Management:** View and organize uploaded documents
 
-## 🔐 Environment Configuration
+## Environment Configuration
 
 All sensitive information should be stored in `django_backend/.env`. The project uses `python-decouple` to safely load environment variables at runtime.
 
@@ -308,7 +317,7 @@ All sensitive information should be stored in `django_backend/.env`. The project
 | `GOOGLE_CLIENT_ID` | No | For Google OAuth (optional) |
 | `GOOGLE_CLIENT_SECRET` | No | For Google OAuth (optional) |
 
-## 🔑 Authentication & Social Login
+## Authentication & Social Login
 
 ### Email/Password Registration
 
@@ -327,7 +336,7 @@ All sensitive information should be stored in `django_backend/.env`. The project
 
 **Note:** Google OAuth configuration requires setting `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env`.
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Public Endpoints
 
@@ -342,7 +351,7 @@ All sensitive information should be stored in `django_backend/.env`. The project
 - `POST /nationalid/apply/` – Start national ID application
 - `POST /license/apply/` – Start driver's license application
 
-## 📋 Application Workflows
+## Application Workflows
 
 ### Passport Application Flow
 
@@ -371,7 +380,7 @@ All sensitive information should be stored in `django_backend/.env`. The project
 5. **Confirmation** – Receive email confirmation
 6. **Track** – Follow progress in applications list
 
-## 📁 File Upload & Storage
+## File Upload & Storage
 
 ### Supported File Types
 
@@ -408,7 +417,7 @@ media/documents/
 - File access is restricted to authenticated users
 - File ownership is tied to the application record
 
-## 🛠️ Development Tips
+## Development Tips
 
 ### Working with Forms
 
@@ -482,7 +491,7 @@ Static files (CSS, JavaScript, images) are served from:
 - Development: `django_backend/e_ikiraro/static/`
 - Production: `django_backend/static/` (after running collectstatic)
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Common Issues & Solutions
 
@@ -581,11 +590,11 @@ If you encounter issues:
 3. Check for error messages in the terminal or browser console
 4. Review the GitHub issues page
 
-## 📝 License
+## License
 
 This project is open source. Please check the LICENSE file for details.
 
-## 👥 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -595,13 +604,13 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## ✉️ Contact & Support
+## Contact & Support
 
 For questions or support:
 - Email: support@e-ikiraro.bi
 - Phone: +257 12 345 678
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [Django Official Documentation](https://docs.djangoproject.com/)
 - [django-allauth Documentation](https://django-allauth.readthedocs.io/)
