@@ -58,12 +58,29 @@
                     <div class="portfolio-image"></div>
                     {% endif %}
                     <div class="portfolio-content">
-                        <a href="{% url 'applications:passport-start' %}">
+                        {% if 'passport' in service.name|lower %}
+                            <a href="{% url 'applications:passport-start' %}">
+                                <div>
+                                    <h4>{{ service.name }}</h4>
+                                </div>
+                            </a>
+                        {% elif 'national' in service.name|lower or 'national id' in service.name|lower %}
+                            <a href="{% url 'applications:nationalid-start' %}">
+                                <div>
+                                    <h4>{{ service.name }}</h4>
+                                </div>
+                            </a>
+                        {% elif 'driver' in service.name|lower or "driver's" in service.name|lower %}
+                            <a href="{% url 'applications:license-start' %}">
+                                <div>
+                                    <h4>{{ service.name }}</h4>
+                                </div>
+                            </a>
+                        {% else %}
                             <div>
                                 <h4>{{ service.name }}</h4>
                             </div>
-                        </a>
-                        <h4><a href="{% url 'applications:passport-start' %}"></a></h4>
+                        {% endif %}
                         <p>{{ service.description|truncatewords:30 }}</p>
                         <div class="portfolio-tech">
                             <span class="tech-tag">Fee: {{ service.base_fee }} BIF </span>

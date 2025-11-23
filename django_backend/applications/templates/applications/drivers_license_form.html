@@ -1,0 +1,171 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h2 class="mb-0">Driver's License Application Form</h2>
+                    <p class="mb-0 mt-2">Please fill in all required fields and upload necessary certificates</p>
+                </div>
+                <div class="card-body p-5">
+                    <form method="POST" enctype="multipart/form-data" id="driversLicenseForm">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-section mb-4">
+                                    <h4 class="section-title text-primary mb-3"><i class="fas fa-id-card"></i> License Details</h4>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.license_type.id_for_label }}" class="font-weight-bold">License Type <span class="text-danger">*</span></label>
+                                            {{ form.license_type }}
+                                            {% if form.license_type.errors %}<div class="text-danger small mt-1">{{ form.license_type.errors }}</div>{% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.address.id_for_label }}" class="font-weight-bold">Address</label>
+                                            {{ form.address }}
+                                            {% if form.address.errors %}<div class="text-danger small mt-1">{{ form.address.errors }}</div>{% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section mb-4">
+                                    <h4 class="section-title text-primary mb-3"><i class="fas fa-file-upload"></i> Documents</h4>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.photo.id_for_label }}" class="font-weight-bold">Photo <span class="text-danger">*</span></label>
+                                            {{ form.photo }}
+                                            <div class="preview mt-2" id="preview_dl_photo"></div>
+                                            {% if form.photo.errors %}<div class="text-danger small mt-1">{{ form.photo.errors }}</div>{% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.national_id.id_for_label }}" class="font-weight-bold">National ID <span class="text-danger">*</span></label>
+                                            {{ form.national_id }}
+                                            <div class="preview mt-2" id="preview_dl_national_id"></div>
+                                            {% if form.national_id.errors %}<div class="text-danger small mt-1">{{ form.national_id.errors }}</div>{% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.medical_certificate.id_for_label }}" class="font-weight-bold">Medical Certificate <span class="text-danger">*</span></label>
+                                            {{ form.medical_certificate }}
+                                            <div class="preview mt-2" id="preview_dl_medical"></div>
+                                            {% if form.medical_certificate.errors %}<div class="text-danger small mt-1">{{ form.medical_certificate.errors }}</div>{% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.eye_test_certificate.id_for_label }}" class="font-weight-bold">Eye Test Certificate <span class="text-danger">*</span></label>
+                                            {{ form.eye_test_certificate }}
+                                            <div class="preview mt-2" id="preview_dl_eye"></div>
+                                            {% if form.eye_test_certificate.errors %}<div class="text-danger small mt-1">{{ form.eye_test_certificate.errors }}</div>{% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="{{ form.driving_school_certificate.id_for_label }}" class="font-weight-bold">Driving School Certificate (Optional)</label>
+                                        {{ form.driving_school_certificate }}
+                                        {% if form.driving_school_certificate.errors %}<div class="text-danger small mt-1">{{ form.driving_school_certificate.errors }}</div>{% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">Submit Application</button>
+                                    <a href="{% url 'applications:license-start' %}" class="btn btn-secondary btn-lg px-5 ml-3">Cancel</a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 d-none d-md-block">
+                                <aside class="card border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">Driver's License Tips</h5>
+                                        <p class="small text-muted">Ensure medical and eye test certificates are recent and clearly signed.</p>
+                                        <hr>
+                                        <h6 class="mb-2">Support</h6>
+                                        <p class="small mb-1"><i class="fas fa-phone"></i> +257 12 345 678</p>
+                                        <p class="small mb-1"><i class="fas fa-envelope"></i> support@e-ikiraro.bi</p>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Section headings */
+    .section-title {
+        border-bottom: 3px solid #8b63d6;
+        padding-bottom: 12px;
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #6f42c1;
+    }
+    @media (max-width: 992px) { .section-title { font-size: 1.9rem } }
+
+    .form-section { background:#fbfbfd; padding:18px; border-radius:8px; margin-bottom:1.25rem }
+
+    /* File inputs and notes */
+    .form-section input[type="file"]{ display:block; width:100% }
+    .file-note { font-size:.875rem; color:#6c757d; margin-top:.25rem; display:block }
+
+    /* textarea sizing */
+    .form-section textarea { min-height:180px; max-height:320px; resize:vertical }
+
+    /* preview styling */
+    .preview img{ max-width:100%; height:auto; border-radius:6px; border:1px solid #e9ecef; max-height:240px; object-fit:cover }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    const form = document.getElementById('driversLicenseForm');
+    if(!form) return;
+
+    form.addEventListener('submit', function(e){
+        // basic file-size checks (5MB)
+        const files = form.querySelectorAll('input[type=file]');
+        for(const input of files){
+            if(input.files && input.files[0] && input.files[0].size > 5 * 1024 * 1024){
+                e.preventDefault();
+                alert('Uploaded files must be under 5MB each.');
+                return false;
+            }
+        }
+    });
+
+    function renderPreview(inputId, previewId){
+        const input = document.getElementById(inputId);
+        const container = document.getElementById(previewId);
+        if(!input || !container) return;
+        input.addEventListener('change', function(){
+            container.innerHTML = '';
+            const f = input.files && input.files[0];
+            if(!f) return;
+            if(f.size > 5 * 1024 * 1024){
+                alert('File must be under 5MB');
+                input.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e){
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                container.appendChild(img);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+
+    renderPreview('{{ form.photo.id_for_label }}', 'preview_dl_photo');
+    renderPreview('{{ form.national_id.id_for_label }}', 'preview_dl_national_id');
+    renderPreview('{{ form.medical_certificate.id_for_label }}', 'preview_dl_medical');
+    renderPreview('{{ form.eye_test_certificate.id_for_label }}', 'preview_dl_eye');
+});
+</script>
+
+{% endblock content %}

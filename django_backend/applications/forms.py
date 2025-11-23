@@ -1,6 +1,8 @@
 from django import forms
 from e_ikiraro.models import PassportApplication
 from django.core.validators import FileExtensionValidator
+from e_ikiraro.models import DriversLicenseApplication, NationalIDApplication
+
 
 class PassportApplicationForm(forms.ModelForm):
     # Personal Information
@@ -43,7 +45,7 @@ class PassportApplicationForm(forms.ModelForm):
             'placeholder': 'Nationality'
         })
     )
-    
+
     # Contact Information
     phone_number = forms.CharField(
         max_length=20,
@@ -65,7 +67,7 @@ class PassportApplicationForm(forms.ModelForm):
             'placeholder': 'Enter your current address'
         })
     )
-    
+
     # Parent Information
     father_name = forms.CharField(
         max_length=200,
@@ -81,7 +83,7 @@ class PassportApplicationForm(forms.ModelForm):
             'placeholder': "Mother's full name"
         })
     )
-    
+
     # Emergency Contact
     emergency_contact_name = forms.CharField(
         max_length=200,
@@ -97,7 +99,7 @@ class PassportApplicationForm(forms.ModelForm):
             'placeholder': 'Emergency contact phone'
         })
     )
-    
+
     # Previous Passport Information (Optional)
     previous_passport_number = forms.CharField(
         required=False,
@@ -115,9 +117,9 @@ class PassportApplicationForm(forms.ModelForm):
         })
     )
 
-
     passport_photo = forms.FileField(
-        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])],
+        validators=[FileExtensionValidator(
+            allowed_extensions=['jpg', 'jpeg', 'png'])],
         widget=forms.FileInput(attrs={
             'class': 'form-control',
             'accept': 'image/jpeg,image/png'
@@ -125,7 +127,8 @@ class PassportApplicationForm(forms.ModelForm):
         help_text='Upload a recent passport-sized photo (JPEG/PNG, max 5MB)'
     )
     birth_certificate = forms.FileField(
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])],
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])],
         widget=forms.FileInput(attrs={
             'class': 'form-control',
             'accept': 'application/pdf,image/jpeg,image/png'
@@ -133,7 +136,8 @@ class PassportApplicationForm(forms.ModelForm):
         help_text='Upload your birth certificate (PDF/Image, max 5MB)'
     )
     national_id = forms.FileField(
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])],
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])],
         widget=forms.FileInput(attrs={
             'class': 'form-control',
             'accept': 'application/pdf,image/jpeg,image/png'
@@ -178,7 +182,8 @@ class PassportApplicationForm(forms.ModelForm):
         photo = self.cleaned_data.get('passport_photo')
         if photo:
             if photo.size > 5 * 1024 * 1024:  # 5MB limit
-                raise forms.ValidationError('Photo file size must be under 5MB')
+                raise forms.ValidationError(
+                    'Photo file size must be under 5MB')
         return photo
 
     def clean_birth_certificate(self):
@@ -194,3 +199,57 @@ class PassportApplicationForm(forms.ModelForm):
             if national_id.size > 5 * 1024 * 1024:
                 raise forms.ValidationError('File size must be under 5MB')
         return national_id
+
+
+class DriversLicenseApplicationForm(forms.ModelForm):
+    license_type = forms.ChoiceField(
+        choices=DriversLicenseApplication.LICENSE_TYPES, widget=forms.Select(attrs={'class': 'form-control'}))
+    photo = forms.FileField(validators=[FileExtensionValidator(allowed_extensions=[
+                            'jpg', 'jpeg', 'png'])], widget=forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/jpeg,image/png'}))
+    medical_certificate = forms.FileField(validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])], widget=forms.FileInput(
+        attrs={'class': 'form-control', 'accept': 'application/pdf,image/jpeg,image/png'}))
+    eye_test_certificate = forms.FileField(validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])], widget=forms.FileInput(
+        attrs={'class': 'form-control', 'accept': 'application/pdf,image/jpeg,image/png'}))
+    national_id = forms.FileField(validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])], widget=forms.FileInput(
+        attrs={'class': 'form-control', 'accept': 'application/pdf,image/jpeg,image/png'}))
+    driving_school_certificate = forms.FileField(required=False, validators=[FileExtensionValidator(allowed_extensions=[
+                                                 'pdf', 'jpg', 'jpeg', 'png'])], widget=forms.FileInput(attrs={'class': 'form-control', 'accept': 'application/pdf,image/jpeg,image/png'}))
+
+    class Meta:
+        model = DriversLicenseApplication
+        fields = [
+            'license_type', 'photo', 'medical_certificate', 'eye_test_certificate', 'national_id', 'driving_school_certificate', 'address'
+        ]
+
+    def clean_photo(self):
+        f = self.cleaned_data.get('photo')
+        if f and f.size > 5 * 1024 * 1024:
+            raise forms.ValidationError('Photo file size must be under 5MB')
+        return f
+
+    def clean_medical_certificate(self):
+        f = self.cleaned_data.get('medical_certificate')
+        if f and f.size > 5 * 1024 * 1024:
+            raise forms.ValidationError('File size must be under 5MB')
+        return f
+
+    def clean_eye_test_certificate(self):
+        f = self.cleaned_data.get('eye_test_certificate')
+        if f and f.size > 5 * 1024 * 1024:
+            raise forms.ValidationError('File size must be under 5MB')
+        return f
+
+
+class NationalIDApplicationForm(forms.ModelForm):
+    birth_certificate = forms.FileField(validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'])], widget=forms.FileInput(
+        attrs={'class': 'form-control', 'accept': 'application/pdf,image/jpeg,image/png'}))
+
+    class Meta:
+        model = NationalIDApplication
+        fields = ['birth_certificate', 'father_name', 'mother_name', 'address']
+
+    def clean_birth_certificate(self):
+        f = self.cleaned_data.get('birth_certificate')
+        if f and f.size > 5 * 1024 * 1024:
+            raise forms.ValidationError('File size must be under 5MB')
+        return f

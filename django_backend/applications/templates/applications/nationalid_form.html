@@ -1,0 +1,152 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h2 class="mb-0">National ID Application Form</h2>
+                    <p class="mb-0 mt-2">Please fill in the required fields and upload the requested documents</p>
+                </div>
+                <div class="card-body p-5">
+                    <form method="POST" enctype="multipart/form-data" id="nationalIdForm">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-section mb-4">
+                                    <h4 class="section-title text-primary mb-3"><i class="fas fa-file-upload"></i> Required Documents</h4>
+                                    <div class="mb-3">
+                                        <label for="{{ form.birth_certificate.id_for_label }}" class="font-weight-bold">Birth Certificate <span class="text-danger">*</span></label>
+                                        {{ form.birth_certificate }}
+                                        {% if form.birth_certificate.help_text %}<small class="form-text text-muted">{{ form.birth_certificate.help_text }}</small>{% endif %}
+                                        <div class="preview mt-2" id="preview_nid_birth"></div>
+                                        {% if form.birth_certificate.errors %}<div class="text-danger small mt-1">{{ form.birth_certificate.errors }}</div>{% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="form-section mb-4">
+                                    <h4 class="section-title text-primary mb-3"><i class="fas fa-users"></i> Parent Information</h4>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.father_name.id_for_label }}" class="font-weight-bold">Father's Full Name <span class="text-danger">*</span></label>
+                                            {{ form.father_name }}
+                                            {% if form.father_name.errors %}<div class="text-danger small mt-1">{{ form.father_name.errors }}</div>{% endif %}
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="{{ form.mother_name.id_for_label }}" class="font-weight-bold">Mother's Full Name <span class="text-danger">*</span></label>
+                                            {{ form.mother_name }}
+                                            {% if form.mother_name.errors %}<div class="text-danger small mt-1">{{ form.mother_name.errors }}</div>{% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section mb-4">
+                                    <h4 class="section-title text-primary mb-3"><i class="fas fa-map-marker-alt"></i> Address</h4>
+                                    <div class="mb-3">
+                                        <label for="{{ form.address.id_for_label }}" class="font-weight-bold">Address <span class="text-danger">*</span></label>
+                                        {{ form.address }}
+                                        {% if form.address.errors %}<div class="text-danger small mt-1">{{ form.address.errors }}</div>{% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">Submit Application</button>
+                                    <a href="{% url 'applications:nationalid-start' %}" class="btn btn-secondary btn-lg px-5 ml-3">Cancel</a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 d-none d-md-block">
+                                <aside class="card border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">National ID Tips</h5>
+                                        <p class="small text-muted">Provide a clear birth certificate scan. If possible, include translations for non-local documents.</p>
+                                        <hr>
+                                        <h6 class="mb-2">Support</h6>
+                                        <p class="small mb-1"><i class="fas fa-phone"></i> +257 12 345 678</p>
+                                        <p class="small mb-1"><i class="fas fa-envelope"></i> support@e-ikiraro.bi</p>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Section headings */
+    .section-title {
+        border-bottom: 3px solid #8b63d6;
+        padding-bottom: 12px;
+        font-size: 2.6rem;
+        font-weight: 700;
+        color: #6f42c1;
+    }
+    @media (max-width: 992px) { .section-title { font-size: 1.9rem } }
+
+    .form-section { background:#fbfbfd; padding:18px; border-radius:8px; margin-bottom:1.25rem }
+
+    /* File inputs and notes */
+    .form-section input[type="file"]{ display:block; width:100% }
+    .file-note { font-size:.875rem; color:#6c757d; margin-top:.25rem; display:block }
+
+    /* textarea sizing */
+    .form-section textarea { min-height:180px; max-height:320px; resize:vertical }
+
+    /* preview styling */
+    .preview img{ max-width:100%; height:auto; border-radius:6px; border:1px solid #e9ecef; max-height:240px; object-fit:cover }
+
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    const form = document.getElementById('nationalIdForm');
+    if(!form) return;
+
+    // Basic client-side file size check for birth_certificate (5MB)
+    form.addEventListener('submit', function(e){
+        const fileInput = form.querySelector('input[type=file]');
+        if(fileInput && fileInput.files && fileInput.files[0]){
+            const f = fileInput.files[0];
+            if(f.size > 5 * 1024 * 1024){
+                e.preventDefault();
+                alert('Birth certificate must be under 5MB');
+                return false;
+            }
+        }
+    });
+
+    // Simple preview helper
+    function renderPreview(inputId, previewId){
+        const input = document.getElementById(inputId);
+        const container = document.getElementById(previewId);
+        if(!input || !container) return;
+        input.addEventListener('change', function(){
+            container.innerHTML = '';
+            const f = input.files && input.files[0];
+            if(!f) return;
+            if(f.size > 5 * 1024 * 1024){
+                alert('File must be under 5MB');
+                input.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e){
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                container.appendChild(img);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+
+    renderPreview('{{ form.birth_certificate.id_for_label }}', 'preview_nid_birth');
+});
+</script>
+
+{% endblock content %}
