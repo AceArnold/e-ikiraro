@@ -1,0 +1,76 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container my-5 fade-in">
+    <div class="row">
+        <div class="col-md-4 slide-in-left ">
+            <div class="card shadow-sm mb-4 ">
+                <div class="card-body text-center">
+                    <img src="{% static 'e_ikiraro/images/no_user.jpeg' %}" alt="Avatar" class="rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover;">
+                    <h4 class="card-title">{{ user.get_full_name|default:user.username }}</h4>
+                    <p class="text-muted small mb-1">{{ user.email }}</p>
+                    <p class="small text-muted">Joined {{ user.date_joined|date:"F j, Y" }}</p>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-secondary btn-sm btn-block">Logout</a>
+                </div>
+            </div>
+
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" href="{% url 'e-ikiraro-documents' %}">My Documents</a>
+                <a class="list-group-item list-group-item-action" href="{% url 'applications:my-applications' %}">My Applications</a>
+            </div>
+        </div>
+
+    <div class="col-md-8 slide-in-right">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Profile Overview</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Username</dt>
+                        <dd class="col-sm-8">{{ user.username }}</dd>
+
+                        <dt class="col-sm-4">Full name</dt>
+                        <dd class="col-sm-8">{{ user.get_full_name|default:"—" }}</dd>
+
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">{{ user.email }}</dd>
+
+                        <dt class="col-sm-4">Active</dt>
+                        <dd class="col-sm-8">{% if user.is_active %}Yes{% else %}No{% endif %}</dd>
+                    </dl>
+
+                    <hr>
+                    <h6>Recent Activity</h6>
+                    <p class="text-muted small">You have no recent activity to display.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Quick Actions</h6>
+                    <div class="row">
+                        <div class="col-sm-4 mb-2">
+                            <a href="#" class="btn btn-outline-primary btn-block">Edit Profile</a>
+                        </div>
+                        <div class="col-sm-4 mb-2">
+                            <a href="#" class="btn btn-outline-secondary btn-block">Change Password</a>
+                        </div>
+                        <div class="col-sm-4 mb-2">
+                            <a href="{% url 'applications:passport-start' %}" class="btn btn-primary btn-block">Apply Passport</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Small adjustments to match the app's card-heavy, clean UI */
+    .card-header h5 { font-weight:600; }
+    .list-group-item { cursor: pointer; }
+    .col-md-4 .card-body { padding-bottom: 1rem; },
+</style>
+
+{% endblock content %}

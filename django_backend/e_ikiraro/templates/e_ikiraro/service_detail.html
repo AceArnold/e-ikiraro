@@ -1,0 +1,31 @@
+{% extends "e_ikiraro/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            {% if service.service_photo %}
+                <img src="{{ service.service_photo.url }}" alt="{{ service.name }}" class="img-fluid rounded">
+            {% else %}
+                <img src="{% static 'e_ikiraro/images/1.webp' %}" alt="{{ service.name }}" class="img-fluid rounded">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1>{{ service.name }}</h1>
+            <p class="text-muted">Fee: {{ service.base_fee }} BIF</p>
+            <p>{{ service.description }}</p>
+
+            <div class="mt-4">
+                {% if 'passport' in service.name|lower %}
+                    <a href="{% url 'applications:passport-start' %}" class="btn btn-primary">Apply for Passport</a>
+                {% elif 'license' in service.name|lower or 'driver' in service.name|lower %}
+                    <a href="#" class="btn btn-primary">Start License Application</a>
+                {% else %}
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
