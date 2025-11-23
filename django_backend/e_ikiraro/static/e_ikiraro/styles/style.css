@@ -118,6 +118,8 @@
         :root {
             --primary-color: #6366f1;
             --secondary-color: #8b5cf6;
+            /* navbar height used to offset fixed nav from content */
+            --nav-height: 80px;
             --accent-color: #f59e0b;
             --accent-pink: #ec4899;
             --accent-cyan: #06b6d4;
@@ -148,6 +150,8 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
             background: var(--bg-primary);
+            /* offset fixed navbar so page content is not hidden underneath */
+            padding-top: var(--nav-height);
         }
 
         /* Navigation */
@@ -319,7 +323,8 @@
 
         /* Hero Section */
         .hero {
-            height: 100vh;
+            /* make hero fill remaining viewport below the fixed navbar */
+            height: calc(100vh - var(--nav-height));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -677,9 +682,7 @@
             opacity: 0.7;
         }
 
-        .about-image::after {
-
-        }
+    /* removed empty pseudo-element rule */
 
         .about-text h3 {
             font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;

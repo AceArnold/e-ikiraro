@@ -43,10 +43,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('e_ikiraro.urls')),
     path('register/', user_views.register, name='register'),
+    path('logout/', user_views.logout_view, name='logout'),
+
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     # allauth routes (social login, callbacks)
     path('accounts/', include('allauth.urls')),
-    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    # path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', user_views.profile, name='profile'),
     path('passport/', include('applications.urls')),
     path('verify-otp/<uidb64>/', user_views.verify_otp, name='verify-otp'),

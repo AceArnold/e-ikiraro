@@ -24,7 +24,9 @@
         <div class="container">
             <h2 class="section-title fade-in">About E-ikiraro</h2>
             <div class="about-content">
-                <div class="about-image slide-in-left"></div>
+                <div class="about-image slide-in-left">
+                    
+                </div>
                 <div class="about-text slide-in-right">
                     <h3>E-Ikiraro is a simple online platform that helps Burundians access key government services quickly and conveniently.</h3>
 
@@ -48,47 +50,29 @@
         <div class="container">
             <h2 class="section-title fade-in">Our Services</h2>
             <div class="portfolio-grid">
+                {% for service in services %}
                 <div class="portfolio-item">
+                    {% if service.service_photo %}
+                    <div class="portfolio-image" style="background-image: url('{{ service.service_photo.url }}'); background-size: cover; background-position: center;"></div>
+                    {% else %}
                     <div class="portfolio-image"></div>
+                    {% endif %}
                     <div class="portfolio-content">
                         <a href="{% url 'applications:passport-start' %}">
-                          <div>
-                            <h4>Driver’s License Application</h4>
-                          </div>
+                            <div>
+                                <h4>{{ service.name }}</h4>
+                            </div>
                         </a>
-                        <p>Apply online for your driver’s license with a simple and faster process. Submit your details, track your application, and receive updates without long queues.</p>
-                          <div class="portfolio-tech">
-                            <span class="tech-tag">Provisional driver's Lisence</span>
-                            <span class="tech-tag">Practical driver's Lisence</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image"></div>
-                    <div class="portfolio-content">
-                        <h4>Brand Identity System</h4>
-                        <p>Complete visual identity redesign for a tech startup, including logo, guidelines, and digital assets. Creating a cohesive brand experience across all touchpoints.</p>
+                        <h4><a href="{% url 'applications:passport-start' %}"></a></h4>
+                        <p>{{ service.description|truncatewords:30 }}</p>
                         <div class="portfolio-tech">
-                            <span class="tech-tag">Illustrator</span>
-                            <span class="tech-tag">Photoshop</span>
-                            <span class="tech-tag">Figma</span>
-                            <span class="tech-tag">After Effects</span>
+                            <span class="tech-tag">Fee: {{ service.base_fee }} BIF </span>
                         </div>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image"></div>
-                    <div class="portfolio-content">
-                        <h4>Mobile App Design</h4>
-                        <p>Intuitive mobile app interface for a fitness tracking application with focus on accessibility and user engagement through gamification.</p>
-                        <div class="portfolio-tech">
-                            <span class="tech-tag">Figma</span>
-                            <span class="tech-tag">Principle</span>
-                            <span class="tech-tag">React Native</span>
-                            <span class="tech-tag">Lottie</span>
-                        </div>
-                    </div>
-                </div>
+                {% empty %}
+                <p class="text-muted">No services available at the moment.</p>
+                {% endfor %}
             </div>
         </div>
     </section>
