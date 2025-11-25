@@ -45,7 +45,7 @@
                                         <div class="d-flex align-items-center">
                                             <i class="fas fa-mobile-alt fa-2x text-primary mr-3"></i>
                                             <div>
-                                                <strong>Mobile Money</strong>
+                                                <strong class="text-dark">Mobile Money</strong>
                                                 <p class="mb-0 small text-muted">Pay using Ecocash, Lumicash, or other mobile money services</p>
                                             </div>
                                         </div>
@@ -101,7 +101,7 @@
                         </div>
                         
                         <!-- Credit Card Details (shown when credit card is selected) -->
-                        <div id="creditCardDetails" class="payment-details" style="display: none;">
+                        <div id="creditCardDetails" class="payment-details" style="display: none:"">
                             <div class="form-group">
                                 <label for="card_number" class="font-weight-bold">Card Number</label>
                                 <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" maxlength="19">
@@ -144,6 +144,17 @@
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease;
+        background-color: #ffffff;
+        color: #333333;
+    }
+    .payment-option strong {
+        color: #212529;
+        display: block;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+    .payment-option p {
+        color: #666666;
     }
     .payment-option:hover {
         border-color: #007bff;
@@ -152,12 +163,29 @@
     .custom-control-input:checked ~ .custom-control-label.payment-option {
         border-color: #007bff;
         background-color: #e7f3ff;
+        color: #212529;
+    }
+    .custom-control-input:checked ~ .custom-control-label.payment-option strong {
+        color: #007bff;
     }
     .payment-details {
-        background: #f8f9fa;
+        background: #ffffff;
         padding: 20px;
         border-radius: 8px;
         margin-top: 20px;
+        border: 1px solid #e0e0e0;
+        color: #333333;
+    }
+    .payment-details .form-group label {
+        color: #212529;
+    }
+    .payment-details .form-control {
+        color: #333333;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+    }
+    .payment-details .form-control::placeholder {
+        color: #999999;
     }
 </style>
 
