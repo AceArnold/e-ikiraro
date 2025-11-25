@@ -11,9 +11,13 @@
 - [Setup and Installation](#setup-and-installation)
 - [Database Migrations](#database-migrations)
 - [Running the Application](#running-the-application)
+- [Quick Start Testing Guide](#quick-start-testing-guide)
 - [Creating a Superuser](#creating-a-superuser)
 - [Environment Configuration](#environment-configuration)
 - [Authentication & Social Login](#authentication--social-login)
+  - [Email/Password Registration](#emailpassword-registration)
+  - [Google OAuth Setup](#google-oauth-login-setup)
+  - [Testing Without OAuth](#testing-without-google-oauth)
 - [API Endpoints](#api-endpoints)
 - [Application Workflows](#application-workflows)
 - [File Upload & Storage](#file-upload--storage)
@@ -275,6 +279,65 @@ Verify everything is configured correctly:
 python manage.py check
 ```
 
+## Quick Start Testing Guide
+
+### For Graders / Teachers: Testing Without Google OAuth Setup
+
+If you just want to test the application quickly without setting up Google OAuth:
+
+#### Option A: Test with Email/Password Authentication (Recommended)
+
+1. **Start the dev server:**
+```bash
+cd django_backend
+python manage.py runserver
+```
+
+2. **Register a test account:**
+   - Go to [http://127.0.0.1:8000/register/](http://127.0.0.1:8000/register/)
+   - Fill in email, password, and confirm password
+   - Click "Register"
+   - Click the verification link in the console output (since email isn't configured)
+
+3. **Log in and test features:**
+   - Navigate to homepage and click on a service (Passport, National ID, or Driver's License)
+   - Fill out the application form
+   - Upload test files (any file under 5MB)
+   - Submit the application
+   - View the application in "My Applications"
+
+**All core features work perfectly with email/password authentication!**
+
+#### Option B: Test with Google OAuth (Full Setup)
+
+Follow the detailed instructions in the [Google OAuth Login Setup](#google-oauth-login-setup) section.
+
+### Email Testing in Development
+
+If email configuration isn't set up, the app uses the console email backend:
+- Verification links appear in the Django server console output
+- Copy and paste the verification link into your browser
+- No actual emails are sent
+
+This is perfect for development and testing!
+
+### Testing Checklist
+
+Use this checklist to verify all features work:
+
+- ✅ **User Registration:** Create an account with email/password
+- ✅ **Login:** Log in with your credentials
+- ✅ **Passport Application:** Start → Fill form → Upload files → Submit
+- ✅ **National ID Application:** Start → Fill form → Upload birth certificate → Submit
+- ✅ **Driver's License Application:** Start → Fill form → Upload multiple files → Submit
+- ✅ **My Applications:** View submitted applications
+- ✅ **Application Details:** View full details including status and documents
+- ✅ **File Preview:** Upload a file and see it previewed
+- ✅ **File Validation:** Try to upload a file > 5MB (should fail)
+- ✅ **Admin Panel:** Log in at `/admin/` with superuser account
+
+All these work **without Google OAuth configuration**!
+
 ## Creating a Superuser
 
 To access the Django admin panel and manage applications, create a superuser account:
@@ -327,14 +390,122 @@ All sensitive information should be stored in `django_backend/.env`. The project
 4. Verify your email using the link sent to your inbox
 5. Log in with your credentials
 
-### Google OAuth Login
+### Google OAuth Login Setup
 
-1. Click "Sign in with Google" on the login page
-2. Authenticate with your Google account
-3. Authorize the application to access your profile and email
-4. You will be logged in and redirected to your dashboard
+The application supports Google OAuth 2.0 authentication for streamlined sign-in. Follow the steps below to enable it.
 
-**Note:** Google OAuth configuration requires setting `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env`.
+#### Step 1: Create a Google Cloud Project
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Click on the project dropdown at the top and select **"New Project"**
+3. Enter project name: `E-Ikiraro` (or your preferred name)
+4. Click **"Create"** and wait for the project to initialize
+5. Select your new project from the dropdown
+
+#### Step 2: Enable Google+ API
+
+1. In the Google Cloud Console, go to **APIs & Services** → **Library**
+2. Search for `"Google+ API"`
+3. Click on **Google+ API** in the results
+4. Click **"Enable"** button
+5. Wait for the API to be enabled (you'll see a confirmation message)
+
+#### Step 3: Create OAuth 2.0 Credentials
+
+1. Go to **APIs & Services** → **Credentials** (left sidebar)
+2. Click **"+ Create Credentials"** → Select **"OAuth client ID"**
+3. You may see a popup to "Configure OAuth consent screen" - click **"Configure Consent Screen"**
+4. Select **User Type:** "External" → Click **"Create"**
+
+#### Step 4: Configure OAuth Consent Screen
+
+1. On the "OAuth consent screen" page:
+   - **App name:** `E-Ikiraro`
+   - **User support email:** Your email address
+   - **Developer contact:** Your email address
+   - Click **"Save and Continue"**
+
+2. On "Scopes" page:
+   - Click **"Save and Continue"** (default scopes are fine)
+
+3. On "Test users" page:
+   - Click **"Save and Continue"**
+
+4. Review and click **"Back to Dashboard"**
+
+#### Step 5: Create OAuth Client ID
+
+1. Go back to **APIs & Services** → **Credentials**
+2. Click **"+ Create Credentials"** → Select **"OAuth client ID"**
+3. **Application type:** Select `"Web application"`
+4. **Name:** `E-Ikiraro Web Client`
+5. Under **Authorized redirect URIs**, click **"Add URI"** and add:
+   - `http://127.0.0.1:8000/accounts/google/login/callback/`
+   - `http://localhost:8000/accounts/google/login/callback/`
+6. Click **"Create"**
+7. A popup will show your credentials. Copy:
+   - **Client ID** (looks like: `xxxxx.apps.googleusercontent.com`)
+   - **Client Secret** (keep this private!)
+
+#### Step 6: Add Credentials to `.env`
+
+1. Open `django_backend/.env`
+2. Add the following lines:
+```bash
+GOOGLE_CLIENT_ID=your-client-id-here.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-client-secret-here
+```
+
+3. Save the file
+
+#### Step 7: Create the Django Social App
+
+With your virtual environment activated, run:
+
+```bash
+cd django_backend
+python manage.py migrate
+python manage.py create_socialapp
+```
+
+This command will automatically read the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` from your `.env` file and configure the OAuth app in Django.
+
+#### Step 8: Verify Google Login Works
+
+1. Start the development server:
+```bash
+python manage.py runserver
+```
+
+2. Visit [http://127.0.0.1:8000/login/](http://127.0.0.1:8000/login/)
+3. You should see a **"Sign in with Google"** button
+4. Click it and test the login flow
+
+#### Troubleshooting Google OAuth
+
+| Issue | Solution |
+|-------|----------|
+| "Sign in with Google" button doesn't appear | Check that `GOOGLE_CLIENT_ID` is set in `.env` |
+| "Invalid redirect URI" error | Add the redirect URI to Google Cloud Console (see Step 5) |
+| `create_socialapp` command fails | Verify `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are correctly set in `.env` |
+| "Credentials not found" error | Run `python manage.py migrate` first, then try again |
+
+### Testing Without Google OAuth
+
+If you're having trouble setting up Google OAuth or want to test the core application:
+
+1. **Email/Password authentication still works fully** - all application features are available
+2. Simply register with an email and password on the registration page
+3. No Google OAuth setup needed to test the app
+
+The email/password authentication provides complete access to:
+- Application submission (Passport, National ID, Driver's License)
+- Payment processing
+- Application tracking
+- Admin features
+- All core workflows
+
+**Note:** To test in production or share with others, Google OAuth setup is recommended for better UX, but it's optional.
 
 ## API Endpoints
 
